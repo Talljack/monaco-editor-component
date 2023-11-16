@@ -1,0 +1,87 @@
+{
+  "name": "starter-ts-lib",
+  "type": "module",
+  "version": "0.0.4",
+  "packageManager": "pnpm@7.11.0",
+  "description": "template of typescript library",
+  "author": "Talljack",
+  "license": "MIT",
+  "homepage": "https://github.com/Talljack/starter-ts-lib#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Talljack/starter-ts-lib.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Talljack/starter-ts-lib/issues"
+  },
+  "keywords": [
+    "typescript"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint . && prettier --check .",
+    "prepublishOnly": "pnpm run build",
+    "release": "bumpp && npm publish",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit",
+    "clean": "rimraf dist node_modules"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^0.26.3",
+    "@types/node": "^18.7.18",
+    "bumpp": "^8.2.1",
+    "eslint": "^8.23.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "esno": "^0.16.3",
+    "lint-staged": "^13.0.3",
+    "pnpm": "^7.11.0",
+    "prettier": "^2.7.1",
+    "rimraf": "^3.0.2",
+    "tsup": "^6.2.3",
+    "typescript": "^4.8.3",
+    "vite": "^3.1.0",
+    "vitest": "^0.23.2",
+    "yorkie": "^2.0.0"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged",
+    "commit-msg": "node scripts/verifyCommit.js"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "package.json": [
+      "prettier --write"
+    ],
+    "*.vue": [
+      "eslint --fix",
+      "prettier --write",
+      "stylelint --fix"
+    ],
+    "*.{scss,less,styl,html}": [
+      "stylelint --fix",
+      "prettier --write"
+    ],
+    "*.md": [
+      "prettier --write"
+    ]
+  }
+}
