@@ -18,10 +18,9 @@ jobs:
           bun-version: latest
 
       - name: Set node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 18.x
-          cache: bun
 
       - run: npx changelogithub
         env:
