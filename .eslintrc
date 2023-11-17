@@ -1,3 +1,0 @@
-{
-  "extends": ["@antfu", "prettier", "plugin:prettier/recommended"]
-}

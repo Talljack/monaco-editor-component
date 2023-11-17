@@ -13,14 +13,15 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
 
       - name: Set node
         uses: actions/setup-node@v3
         with:
-          node-version: 16.x
-          cache: pnpm
+          node-version: 18.x
+          cache: bun
 
       - run: npx changelogithub
         env:

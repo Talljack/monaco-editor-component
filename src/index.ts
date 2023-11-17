@@ -1,3 +1,4 @@
-export const count = 1
+import monaco from 'monaco-editor'
+import MonacoEditor from './MonacoEditor'
 
-export const c = 2
+export { MonacoEditor, monaco }

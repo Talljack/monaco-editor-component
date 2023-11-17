@@ -1,0 +1,10 @@
+export const formatWidth = (width: string | number) => {
+  if (typeof width === 'number') {
+    return `${width}px`
+  }
+  if (width.endsWith('px') || width.endsWith('vw')) {
+    return width
+  } else {
+    return `${width}px`
+  }
+}

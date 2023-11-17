@@ -1,21 +1,26 @@
 {
-  "name": "starter-ts-lib",
+  "name": "react-monaco-editor",
   "type": "module",
-  "version": "0.0.4",
-  "packageManager": "pnpm@7.11.0",
-  "description": "template of typescript library",
+  "version": "0.0.1",
+  "packageManager": "bun@1.0.11",
+  "description": "Monaco Editor and Viewer Base on React and Tailwindcss.",
   "author": "Talljack",
   "license": "MIT",
-  "homepage": "https://github.com/Talljack/starter-ts-lib#readme",
+  "homepage": "https://github.com/Talljack/react-monaco-editor#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Talljack/starter-ts-lib.git"
+    "url": "git+https://github.com/Talljack/react-monaco-editor.git"
   },
   "bugs": {
-    "url": "https://github.com/Talljack/starter-ts-lib/issues"
+    "url": "https://github.com/Talljack/react-monaco-editor/issues"
   },
   "keywords": [
-    "typescript"
+    "typescript",
+    "react",
+    "monaco-editor",
+    "tailwindcss",
+    "react-monaco-editor",
+    "monaco-viewer"
   ],
   "sideEffects": false,
   "exports": {
@@ -34,47 +39,54 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
-    "lint": "eslint . && prettier --check .",
-    "prepublishOnly": "pnpm run build",
+    "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx .",
+    "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx .",
+    "format": "prettier --cache --write .",
+    "prepublishOnly": "bun run build",
     "release": "bumpp && npm publish",
     "test": "vitest",
-    "typecheck": "tsc --noEmit",
-    "clean": "rimraf dist node_modules"
+    "typecheck": "tsc --incremental --noEmit && rimraf tsconfig.tsbuildinfo",
+    "clean": "rimraf dist node_modules",
+    "postinstall": "simple-git-hooks"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.26.3",
-    "@types/node": "^18.7.18",
-    "bumpp": "^8.2.1",
-    "eslint": "^8.23.1",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "esno": "^0.16.3",
-    "lint-staged": "^13.0.3",
-    "pnpm": "^7.11.0",
-    "prettier": "^2.7.1",
-    "rimraf": "^3.0.2",
-    "tsup": "^6.2.3",
-    "typescript": "^4.8.3",
-    "vite": "^3.1.0",
-    "vitest": "^0.23.2",
-    "yorkie": "^2.0.0"
+    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+    "@types/node": "^20.9.0",
+    "@types/react": "^18.2.37",
+    "@typescript-eslint/eslint-plugin": "^6.11.0",
+    "@typescript-eslint/parser": "^6.11.0",
+    "bumpp": "^9.2.0",
+    "eslint": "^8.53.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "esno": "^4.0.0",
+    "lint-staged": "^15.1.0",
+    "prettier": "^3.1.0",
+    "prettier-plugin-organize-imports": "^3.2.4",
+    "prettier-plugin-tailwindcss": "^0.5.7",
+    "rimraf": "^5.0.5",
+    "simple-git-hooks": "^2.9.0",
+    "tailwindcss": "^3.3.5",
+    "tailwindcss-animate": "^1.0.7",
+    "tsup": "^7.2.0",
+    "typescript": "^5.2.2",
+    "vite": "^4.5.0",
+    "vitest": "^0.34.6",
+    "picocolors": "^1.0.0"
   },
-  "gitHooks": {
-    "pre-commit": "lint-staged",
+  "simple-git-hooks": {
+    "pre-commit": "bun run lint:fix && bun run format && bun lint-staged",
     "commit-msg": "node scripts/verifyCommit.js"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
+      "eslint",
       "prettier --write"
     ],
     "package.json": [
       "prettier --write"
-    ],
-    "*.vue": [
-      "eslint --fix",
-      "prettier --write",
-      "stylelint --fix"
     ],
     "*.{scss,less,styl,html}": [
       "stylelint --fix",
@@ -83,5 +95,9 @@
     "*.md": [
       "prettier --write"
     ]
+  },
+  "dependencies": {
+    "monaco-editor": "^0.44.0",
+    "react": "^18.2.0"
   }
 }
