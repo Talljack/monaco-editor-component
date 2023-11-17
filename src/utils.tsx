@@ -8,3 +8,5 @@ export const formatWidth = (width: string | number) => {
     return `${width}px`
   }
 }
+
+export const noop = () => {}
