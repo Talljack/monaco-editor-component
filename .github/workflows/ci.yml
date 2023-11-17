@@ -15,67 +15,70 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
 
       - name: Set node
         uses: actions/setup-node@v3
         with:
-          node-version: 16.x
-          cache: pnpm
+          node-version: 18.x
+          cache: bun
 
-      - name: Install
-        run: pnpm i
+      - name: Install dependencies
+        run: bun install
 
       - name: Lint
-        run: pnpm run lint
+        run: bun run lint
 
   typecheck:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
 
       - name: Set node
         uses: actions/setup-node@v3
         with:
-          node-version: 16.x
-          cache: pnpm
+          node-version: 18.x
+          cache: bun
 
-      - name: Install
-        run: pnpm i
+      - name: Install dependencies
+        run: bun install
 
       - name: Typecheck
-        run: pnpm run typecheck
+        run: bun run typecheck
 
   test:
     runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
-        node: [14.x, 16.x]
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        node: [18.x]
+        os: [ubuntu-latest]
       fail-fast: false
 
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
 
       - name: Set node ${{ matrix.node }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
-          cache: pnpm
+          cache: bun
 
       - name: Install
-        run: pnpm i
+        run: bun install
 
       - name: Build
-        run: pnpm run build
+        run: bun run build
 
       - name: Test
-        run: pnpm run test
+        run: bun run test

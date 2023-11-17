@@ -7,4 +7,5 @@ module.exports = {
   singleQuote: true,
   jsxSingleQuote: true, // jsx使用单引号
   arrowParens: 'avoid', // 在唯一的箭头函数参数周围包含括号
+  plugins: ['prettier-plugin-organize-imports', 'prettier-plugin-tailwindcss'],
 }

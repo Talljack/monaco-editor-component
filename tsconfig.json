@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "rootDir": ".",
     "target": "es2020",
     "module": "esnext",
     "lib": ["esnext"],
@@ -9,6 +10,11 @@
     "strictNullChecks": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "skipDefaultLibCheck": true
+    "skipDefaultLibCheck": true,
+    "jsx": "react-jsx",
+    "types": ["monaco-editor"],
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   }
 }
