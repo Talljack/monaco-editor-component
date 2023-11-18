@@ -1,26 +1,26 @@
 {
-  "name": "react-monaco-editor",
+  "name": "monaco-editor-component",
   "type": "module",
   "version": "0.0.1",
   "packageManager": "bun@1.0.11",
   "description": "Monaco Editor and Viewer Base on React and Tailwindcss.",
   "author": "Talljack",
   "license": "MIT",
-  "homepage": "https://github.com/Talljack/react-monaco-editor#readme",
+  "homepage": "https://github.com/Talljack/monaco-editor-component#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Talljack/react-monaco-editor.git"
+    "url": "git+https://github.com/Talljack/monaco-editor-component.git"
   },
   "bugs": {
-    "url": "https://github.com/Talljack/react-monaco-editor/issues"
+    "url": "https://github.com/Talljack/monaco-editor-component/issues"
   },
   "keywords": [
     "typescript",
     "react",
     "monaco-editor",
     "tailwindcss",
-    "react-monaco-editor",
-    "monaco-viewer"
+    "monaco-editor-component",
+    "monaco-diff-editor"
   ],
   "sideEffects": false,
   "exports": {

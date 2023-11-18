@@ -1,4 +1,4 @@
-<h1 align="center">react-monaco-editor</h1>
+<h1 align="center">monaco-editor-component</h1>
 
 <div align="center">
 
@@ -8,21 +8,21 @@ React component based on [Monaco Editor](https://github.com/Microsoft/monaco-edi
 ## Installation
 
 ```bash
-npm install react-monaco-editor
+npm install monaco-editor-component
 
 OR
 
-bun install react-monaco-editor
+bun install monaco-editor-component
 ```
 
 ## Usage
 
-You can see the [demo](https://github.com/Talljack/react-monaco-editor/tree/main/demo) details.
+You can see the [demo](https://github.com/Talljack/monaco-editor-component/tree/main/demo) details.
 
 ```tsx
 import { useState } from 'react'
 import { createRoot } from 'react-dom/client'
-import { MonacoEditor, MonacoDiffEditor } from 'react-monaco-editor'
+import { MonacoEditor, MonacoDiffEditor } from 'monaco-editor-component'
 
 const App = () => {
   const [code, setCode] = useState('console.log("Hello World")')
@@ -81,7 +81,7 @@ MonacoDiffEditor extends MonacoEditor, so it has all the props of MonacoEditor b
 
 ```typescript
 import { useRef } from 'react'
-import type { MonacoEditorRef } from 'react-monaco-editor'
+import type { MonacoEditorRef } from 'monaco-editor-component'
 const editorRef = useRef<MonacoEditorRef>(null)
 
 // usage
@@ -129,7 +129,7 @@ self.MonacoEnvironment = {
 };
 
 // App.tsx
-import { MonacoEditor } from 'react-monaco-editor'
+import { MonacoEditor } from 'monaco-editor-component'
 import './worker'
 
 // usage of MonacoEditor...
