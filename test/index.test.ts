@@ -1,7 +1,7 @@
-import { formatWidth } from '@/utils'
 import { describe, expect, it } from 'vitest'
+import { formatWidth } from '../src/utils'
 
-describe('test', () => {
+describe('utils', () => {
   it('formatWidth', () => {
     it('percent', () => {
       expect(formatWidth('50%')).toBe('50%')
