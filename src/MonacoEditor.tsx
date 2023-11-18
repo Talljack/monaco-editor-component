@@ -1,21 +1,24 @@
 import * as monaco from 'monaco-editor'
 import type { EditorLanguage } from 'monaco-editor/esm/metadata'
 import type { FC } from 'react'
-import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { formatWidth, noop } from './utils'
+import React, { useEffect, useState } from 'react'
+import { useCommonMonacoEditor } from './useCommonEditor'
+import { noop } from './utils'
 
 export type Monaco = typeof monaco
 
-export type MonacoEditorLanguage = EditorLanguage
+export type MonacoCodeEditor = monaco.editor.IStandaloneCodeEditor
 
-export type MonacoEditorTheme = monaco.editor.BuiltinTheme
+export type MonacoCodeEditorLanguage = EditorLanguage
 
-export type MonacoOptions = monaco.editor.IStandaloneEditorConstructionOptions
+export type MonacoCodeEditorTheme = monaco.editor.BuiltinTheme
 
-export interface MonacoEditorProps {
+export type MonacoEditorOptions = monaco.editor.IStandaloneEditorConstructionOptions
+
+export interface MonacoEditorProps<T = MonacoCodeEditor, U = MonacoEditorOptions> {
   value: string | null
   className?: string
-  options?: monaco.editor.IStandaloneEditorConstructionOptions
+  options?: U
   width?: string | number
   height?: string | number
   language?: EditorLanguage
@@ -23,9 +26,9 @@ export interface MonacoEditorProps {
   style?: React.CSSProperties
   onChange?: (value: string, e: monaco.editor.IModelContentChangedEvent) => void
   defaultValue?: string
-  onEditorDidMount?: (editor: monaco.editor.IStandaloneCodeEditor) => void
-  onEditorWillUnmount?: (editor: monaco.editor.IStandaloneCodeEditor) => void
-  onEditorWillMount?: (monaco: Monaco) => monaco.editor.IStandaloneEditorConstructionOptions
+  onEditorDidMount?: (editor: T) => void
+  onEditorWillUnmount?: (editor: T) => void
+  onEditorWillMount?: (monaco: Monaco) => U
   modelUri?: (monaco: Monaco) => monaco.Uri
 }
 
@@ -45,18 +48,17 @@ const MonacoEditor: FC<MonacoEditorProps> = ({
   onEditorWillMount = noop,
   modelUri,
 }) => {
-  const editorRef = useRef<HTMLDivElement>(null)
-  const [editor, setEditor] = useState<monaco.editor.IStandaloneCodeEditor | null>(null)
-
-  // style
-  const formatedWidth = useMemo(() => formatWidth(width), [width])
-  const formatedHeight = useMemo(() => formatWidth(height), [height])
-  const defaultStyle = useMemo(
-    () => ({ width: formatedWidth, height: formatedHeight }),
-    [formatedWidth, formatedHeight],
+  const [editor, setEditor] = useState<MonacoCodeEditor | null>(null)
+  const { editorRef, defaultStyle } = useCommonMonacoEditor<MonacoCodeEditor>(
+    {
+      width,
+      height,
+      theme,
+      options,
+    },
+    editor,
   )
-
-  const handleMonacoEditorMounted = (editor: monaco.editor.IStandaloneCodeEditor) => {
+  const handleMonacoEditorMounted = (editor: MonacoCodeEditor) => {
     onEditorDidMount(editor)
     editor.onDidChangeModelContent(e => {
       const newValue = editor.getValue()
@@ -107,31 +109,7 @@ const MonacoEditor: FC<MonacoEditorProps> = ({
         monaco.editor.setModelLanguage(model, language)
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [language])
-  // watch theme
-  useEffect(() => {
-    if (editor) {
-      monaco.editor.setTheme(theme)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [theme])
-
-  // watch options
-  useEffect(() => {
-    if (editor) {
-      editor.updateOptions(options)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [options])
-
-  // watch width & height
-  useEffect(() => {
-    if (editor) {
-      editor.layout()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formatedWidth, formatedHeight])
+  }, [language, editor])
 
   // watch value
   useEffect(() => {
@@ -142,8 +120,7 @@ const MonacoEditor: FC<MonacoEditorProps> = ({
         model.setValue(value ?? '')
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value])
+  }, [value, editor])
   return <div ref={editorRef} className={className} style={{ ...defaultStyle, ...style }} />
 }
 
