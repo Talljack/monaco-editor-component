@@ -169,6 +169,11 @@ function App() {
             options={options}
             width={width}
             height={height}
+            onEditorWillMount={() => {
+              return {
+                glyphMargin: true,
+              }
+            }}
           />
         </div>
       </div>

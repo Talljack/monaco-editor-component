@@ -1,7 +1,7 @@
 import * as monaco from 'monaco-editor'
 import type { EditorLanguage } from 'monaco-editor/esm/metadata'
 import type { FC } from 'react'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useCommonMonacoEditor } from './useCommonEditor'
 import { noop } from './utils'
 
@@ -48,15 +48,17 @@ const MonacoEditor: FC<MonacoEditorProps> = ({
   onEditorWillMount = noop,
   modelUri,
 }) => {
-  const [editor, setEditor] = useState<MonacoCodeEditor | null>(null)
-  const { editorRef, defaultStyle } = useCommonMonacoEditor<MonacoCodeEditor>(
+  // const [editor, setEditor] = useState<MonacoCodeEditor | null>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const editorRef = useRef<MonacoCodeEditor | null>(null)
+  const { defaultStyle } = useCommonMonacoEditor<MonacoCodeEditor>(
     {
       width,
       height,
       theme,
       options,
     },
-    editor,
+    editorRef,
   )
   const handleMonacoEditorMounted = (editor: MonacoCodeEditor) => {
     onEditorDidMount(editor)
@@ -67,61 +69,57 @@ const MonacoEditor: FC<MonacoEditorProps> = ({
   }
 
   useEffect(() => {
-    if (editorRef) {
-      setEditor(editor => {
-        if (editor) return editor
-        // editor will mount hook
-        const userOptions = onEditorWillMount?.(monaco)
-        // modelUri
-        const uri = modelUri?.(monaco)
-        let model = uri ? monaco.editor.getModel(uri) : null
-        if (!model) {
-          model = monaco.editor.createModel(value ?? defaultValue, language, uri)
-        } else {
-          // update value and language use same model
-          model.setValue(value ?? defaultValue)
-          monaco.editor.setModelLanguage(model, language)
-        }
-        const monacoEditor = monaco.editor.create(editorRef.current!, {
-          model,
-          value: value ?? defaultValue,
-          ...{ ...options, ...userOptions },
-          theme,
-          language,
-        })
-        // mount hook
-        handleMonacoEditorMounted(monacoEditor)
-        return monacoEditor
+    if (containerRef) {
+      // editor will mount hook
+      const userOptions = onEditorWillMount?.(monaco)
+      // modelUri
+      const uri = modelUri?.(monaco)
+      let model = uri ? monaco.editor.getModel(uri) : null
+      if (!model) {
+        model = monaco.editor.createModel(value ?? defaultValue, language, uri)
+      } else {
+        // update value and language use same model
+        model.setValue(value ?? defaultValue)
+        monaco.editor.setModelLanguage(model, language)
+      }
+      editorRef.current = monaco.editor.create(containerRef.current!, {
+        model,
+        value: value ?? defaultValue,
+        ...{ ...options, ...userOptions },
+        theme,
+        language,
       })
+      // mount hook
+      handleMonacoEditorMounted(editorRef.current)
     }
 
     return () => {
-      onEditorWillUnmount(editor!)
-      editor?.dispose()
+      onEditorWillUnmount(editorRef.current!)
+      editorRef.current?.dispose()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editorRef])
+  }, [containerRef])
   // watch language
   useEffect(() => {
-    if (editor) {
-      const model = editor.getModel()
+    if (editorRef.current) {
+      const model = editorRef.current.getModel()
       if (model) {
         monaco.editor.setModelLanguage(model, language)
       }
     }
-  }, [language, editor])
+  }, [language])
 
   // watch value
   useEffect(() => {
-    if (editor) {
-      if (value === editor.getValue()) return
-      const model = editor.getModel()
+    if (editorRef.current) {
+      if (value === editorRef.current.getValue()) return
+      const model = editorRef.current.getModel()
       if (model) {
         model.setValue(value ?? '')
       }
     }
-  }, [value, editor])
-  return <div ref={editorRef} className={className} style={{ ...defaultStyle, ...style }} />
+  }, [value])
+  return <div ref={containerRef} className={className} style={{ ...defaultStyle, ...style }} />
 }
 
 export default MonacoEditor
