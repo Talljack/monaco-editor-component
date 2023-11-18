@@ -1,65 +1,142 @@
-# React Monaco Editor and Viewer
+<h1 align="center">react-monaco-editor</h1>
 
-This is a React component for the Monaco Editor and Viewer.
+<div align="center">
 
-Base on [monaco-editor](https://github.com/microsoft/monaco-editor)
+React component based on [Monaco Editor](https://github.com/Microsoft/monaco-editor).
+</div>
 
 ## Installation
 
 ```bash
-npm install react-monaco-editor monaco-editor
+npm install react-monaco-editor
 
 OR
 
-bun install react-monaco-editor monaco-editor
+bun install react-monaco-editor
 ```
 
 ## Usage
 
+You can see the [demo](https://github.com/Talljack/react-monaco-editor/tree/main/demo) details.
+
 ```tsx
-import React, { useState } from 'react'
-import { MonacoEditor, MonacoViewer } from 'react-monaco-editor'
+import { useState } from 'react'
+import { createRoot } from 'react-dom/client'
+import { MonacoEditor, MonacoDiffEditor } from 'react-monaco-editor'
 
 const App = () => {
   const [code, setCode] = useState('console.log("Hello World")')
 
   return (
     <div>
-      <MonacoEditor language='javascript' value={code} onChange={value => setCode(value)} />
-      <MonacoViewer language='javascript' value={code} />
+      <MonacoEditor language='javascript' value={code} width='300' height='500' onChange={value => setCode(value)} />
+      <MonacoDiffEditor language='javascript' originalValue='const a = 123;' value={code} onChange={value => setCode(value)} />
     </div>
   )
 }
 
-const app = document.getElementById('app')
-ReactDOM.render(<App />, app)
+const app = document.getElementById('root')
+createRoot(app).render(<App />)
 ```
 
 ## Props
 
-参见 [monaco-editor](https://microsoft.github.io/monaco-editor/docs.html#interfaces/editor.IStandaloneEditorConstructionOptions.html)
-
 ### MonacoEditor
 
-| Name     | Type     | Default | Description                                                         |
-| -------- | -------- | ------- | ------------------------------------------------------------------- |
-| language | string   |         | The language of the editor.                                         |
-| value    | string   |         | The initial value of the auto created model in the editor.          |
-| theme    | string   |         | The theme of the editor.                                            |
-| options  | object   |         | The options of the editor.                                          |
-| onChange | function |         | An event emitted when the content of the current model has changed. |
+| Name         | Type                | Default | Description                                                         |
+| ------------ | ------------------- | ------- | ------------------------------------------------------------------- |
+| language     | string              |   javascript      | The language of the editor.                                         |
+| value        | string              |   null      | The value of the auto created model in the editor.                  |
+| defaultValue | string              |    ""     | The default value of the auto created model in the editor.          |
+| theme        | string              |    vs-dark     | The theme of the editor.                                            |
+| options      | MonacoEditorOptions |    {}     | The options of the editor.                                          |
+| onChange     | (value: string, e: monaco.editor.IModelContentChangedEvent) => void           |    noop     | An event emitted when the content of the current model has changed. |
+| width        | string \| number    |    100%     | The width of the editor.                                            |
+| height       | string \| number    |    100%     | The height of the editor.                                           |
+| className    | string              |    ""     | The class name of the editor.                                       |
+| style        | React.CSSProperties |    {}     | The style of the editor.                                            |
+| onEditorDidMount | (editor: MonacoCodeEditor, monaco: Monaco) => void |    noop     | An event emitted when the editor has been mounted (similar to componentDidMount of React). |
+| onEditorWillMount | (monaco: Monaco) => void |    noop     | An event emitted before the editor mounted (similar to componentWillMount of React). |
+| onEditorWillUnmount | (editor: MonacoCodeEditor, monaco: Monaco) => void |    noop     | An event emitted when the editor will unmount (similar to componentWillUnmount of React). |
+| modelUri | (monaco: Monaco) => monaco.Uri |     undefined    | The uri of the model. |
 
-### MonacoViewer
+More **options** see [monaco-editor](https://microsoft.github.io/monaco-editor/docs.html#interfaces/editor.IStandaloneEditorConstructionOptions.html)
 
-| Name     | Type   | Default | Description                                                |
-| -------- | ------ | ------- | ---------------------------------------------------------- |
-| language | string |         | The language of the editor.                                |
-| value    | string |         | The initial value of the auto created model in the editor. |
-| theme    | string |         | The theme of the editor.                                   |
-| options  | object |         | The options of the editor.                                 |
+### MonacoDiffEditor
+
+MonacoDiffEditor is a diff editor.
+
+#### Props
+
+MonacoDiffEditor extends MonacoEditor, so it has all the props of MonacoEditor but excludes the `modelUri` prop.
+
+| Name         | Type                | Default | Description                                                         |
+| ------------ | ------------------- | ------- | ------------------------------------------------------------------- |
+| originalValue     | string              |    ""     | The original value of the auto created model in the editor, is a base value.         |
+| originalUri | (monaco: Monaco) => monaco.Uri |    undefined     | The uri of the original model. |
+| modifiedUri | (monaco: Monaco) => monaco.Uri |    undefined     | The uri of the modified model. |
+| value | string |    null     | The modified value of the auto created model in the editor, is a modified value. |
+
+### Use Editor Instance
+
+```typescript
+import { useRef } from 'react'
+import type { MonacoEditorRef } from 'react-monaco-editor'
+const editorRef = useRef<MonacoEditorRef>(null)
+
+// usage
+const model = editorRef.current.editor.current.getModel()
+```
+
+### Integrating the ESM version of the Monaco Editor
+
+For Vite you only need to implement the `getWorker` function (NOT the `getWorkerUrl`) to use Vite's output.
+
+Other's like Webpack see [monaco-editor worker](https://github.com/microsoft/monaco-editor/blob/main/docs/integrate-esm.md)
+
+```typescript
+// Vite
+// worker.ts file
+import * as monaco from 'monaco-editor';
+
+self.MonacoEnvironment = {
+	getWorker: function (workerId, label) {
+		const getWorkerModule = (moduleUrl, label) => {
+			return new Worker(self.MonacoEnvironment.getWorkerUrl(moduleUrl), {
+				name: label,
+				type: 'module'
+			});
+		};
+
+		switch (label) {
+			case 'json':
+				return getWorkerModule('/monaco-editor/esm/vs/language/json/json.worker?worker', label);
+			case 'css':
+			case 'scss':
+			case 'less':
+				return getWorkerModule('/monaco-editor/esm/vs/language/css/css.worker?worker', label);
+			case 'html':
+			case 'handlebars':
+			case 'razor':
+				return getWorkerModule('/monaco-editor/esm/vs/language/html/html.worker?worker', label);
+			case 'typescript':
+			case 'javascript':
+				return getWorkerModule('/monaco-editor/esm/vs/language/typescript/ts.worker?worker', label);
+			default:
+				return getWorkerModule('/monaco-editor/esm/vs/editor/editor.worker?worker', label);
+		}
+	}
+};
+
+// App.tsx
+import { MonacoEditor } from 'react-monaco-editor'
+import './worker'
+
+// usage of MonacoEditor...
+```
 
 ## License
 
 MIT License
 
-Copyright (c) 2023 Yugang Cao
+Copyright (c) 2023 Yugang Cao, see the [LICENSE](LICENSE) details.
