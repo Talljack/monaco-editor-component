@@ -43,6 +43,7 @@ const MonacoEditor: FC<MonacoEditorProps> = ({
   onEditorDidMount = noop,
   onEditorWillUnmount = noop,
   onEditorWillMount = noop,
+  modelUri,
 }) => {
   const editorRef = useRef<HTMLDivElement>(null)
   const [editor, setEditor] = useState<monaco.editor.IStandaloneCodeEditor | null>(null)
@@ -65,13 +66,26 @@ const MonacoEditor: FC<MonacoEditorProps> = ({
 
   useEffect(() => {
     if (editorRef) {
-      setEditor(() => {
+      setEditor(editor => {
+        if (editor) return editor
         // editor will mount hook
         const userOptions = onEditorWillMount?.(monaco)
+        // modelUri
+        const uri = modelUri?.(monaco)
+        let model = uri ? monaco.editor.getModel(uri) : null
+        if (!model) {
+          model = monaco.editor.createModel(value ?? defaultValue, language, uri)
+        } else {
+          // update value and language use same model
+          model.setValue(value ?? defaultValue)
+          monaco.editor.setModelLanguage(model, language)
+        }
         const monacoEditor = monaco.editor.create(editorRef.current!, {
+          model,
           value: value ?? defaultValue,
           ...{ ...options, ...userOptions },
           theme,
+          language,
         })
         // mount hook
         handleMonacoEditorMounted(monacoEditor)

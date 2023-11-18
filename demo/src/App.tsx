@@ -141,6 +141,7 @@ function App() {
             console.log('monaco', monaco)
             return {
               lineNumbers: 'on',
+              folding: true,
               glyphMargin: true,
             }
           }}
