@@ -26,8 +26,8 @@ export interface MonacoEditorProps<T = MonacoCodeEditor, U = MonacoEditorOptions
   style?: React.CSSProperties
   onChange?: (value: string, e: monaco.editor.IModelContentChangedEvent) => void
   defaultValue?: string
-  onEditorDidMount?: (editor: T) => void
-  onEditorWillUnmount?: (editor: T) => void
+  onEditorDidMount?: (editor: T, monaco: Monaco) => void
+  onEditorWillUnmount?: (editor: T, monaco: Monaco) => void
   onEditorWillMount?: (monaco: Monaco) => U
   modelUri?: (monaco: Monaco) => monaco.Uri
 }
@@ -67,7 +67,7 @@ const MonacoEditor = forwardRef<MonacoEditorRef, MonacoEditorProps>(
       editorRef,
     )
     const handleMonacoEditorMounted = (editor: MonacoCodeEditor) => {
-      onEditorDidMount(editor)
+      onEditorDidMount(editor, monaco)
       editor.onDidChangeModelContent(e => {
         const newValue = editor.getValue()
         onChange?.(newValue, e)
@@ -100,7 +100,7 @@ const MonacoEditor = forwardRef<MonacoEditorRef, MonacoEditorProps>(
       }
 
       return () => {
-        onEditorWillUnmount(editorRef.current!)
+        onEditorWillUnmount(editorRef.current!, monaco)
         editorRef.current?.dispose()
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps

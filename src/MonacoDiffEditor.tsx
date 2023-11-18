@@ -51,7 +51,7 @@ const MonacoDiffEditor = forwardRef<MonacoDiffEditorRef, MonacoDiffEditorProps>(
       editorRef,
     )
     const handleMonacoEditorMounted = (editor: MonacoCodeDiffEditor) => {
-      onEditorDidMount(editor)
+      onEditorDidMount(editor, monaco)
       const modifiedModel = editor.getModel()?.modified
       if (!modifiedModel) return
       modifiedModel.onDidChangeContent(e => {
@@ -93,7 +93,7 @@ const MonacoDiffEditor = forwardRef<MonacoDiffEditorRef, MonacoDiffEditorProps>(
       }
 
       return () => {
-        onEditorWillUnmount(editorRef.current!)
+        onEditorWillUnmount(editorRef.current!, monaco)
         editorRef.current?.dispose()
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
