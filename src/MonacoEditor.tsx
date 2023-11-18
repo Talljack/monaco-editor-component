@@ -1,19 +1,19 @@
-import { formatWidth, noop } from '@/utils'
 import * as monaco from 'monaco-editor'
 import type { EditorLanguage } from 'monaco-editor/esm/metadata'
 import type { FC } from 'react'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
+import { formatWidth, noop } from './utils'
 
 export type Monaco = typeof monaco
 
 export interface MonacoEditorProps {
   value: string | null
   className?: string
-  options: monaco.editor.IStandaloneEditorConstructionOptions
-  width: string | number
-  height: string | number
-  language: EditorLanguage
-  theme: monaco.editor.BuiltinTheme
+  options?: monaco.editor.IStandaloneEditorConstructionOptions
+  width?: string | number
+  height?: string | number
+  language?: EditorLanguage
+  theme?: monaco.editor.BuiltinTheme
   style?: React.CSSProperties
   onChange?: (value: string, e: monaco.editor.IModelContentChangedEvent) => void
   defaultValue?: string
@@ -26,11 +26,11 @@ export interface MonacoEditorProps {
 const MonacoEditor: FC<MonacoEditorProps> = ({
   value = null,
   className = '',
-  options,
-  width,
-  height,
-  language,
-  theme,
+  options = {},
+  width = '100%',
+  height = '100%',
+  language = 'javascript',
+  theme = 'vs-dark',
   style = {},
   onChange = noop,
   defaultValue = '',
@@ -91,7 +91,7 @@ const MonacoEditor: FC<MonacoEditorProps> = ({
       onEditorWillUnmount(editor!)
       editor?.dispose()
     }
-    // react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editorRef])
   // watch language
   useEffect(() => {
@@ -101,12 +101,14 @@ const MonacoEditor: FC<MonacoEditorProps> = ({
         monaco.editor.setModelLanguage(model, language)
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [language])
   // watch theme
   useEffect(() => {
     if (editor) {
       monaco.editor.setTheme(theme)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [theme])
 
   // watch options
@@ -114,6 +116,7 @@ const MonacoEditor: FC<MonacoEditorProps> = ({
     if (editor) {
       editor.updateOptions(options)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [options])
 
   // watch width & height
@@ -121,12 +124,9 @@ const MonacoEditor: FC<MonacoEditorProps> = ({
     if (editor) {
       editor.layout()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formatedWidth, formatedHeight])
-  return (
-    <div>
-      <div ref={editorRef} className={className} style={{ ...defaultStyle, ...style }} />
-    </div>
-  )
+  return <div ref={editorRef} className={className} style={{ ...defaultStyle, ...style }} />
 }
 
 export default MonacoEditor
