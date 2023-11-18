@@ -1,4 +1,4 @@
-import monaco from 'monaco-editor'
+import * as monaco from 'monaco-editor'
 import MonacoEditor from './MonacoEditor'
 export type { Monaco, MonacoEditorProps } from './MonacoEditor'
 

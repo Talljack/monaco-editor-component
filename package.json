@@ -53,6 +53,7 @@
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "@types/node": "^20.9.0",
     "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.15",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "@typescript-eslint/parser": "^6.11.0",
     "bumpp": "^9.2.0",
@@ -63,6 +64,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "esno": "^4.0.0",
     "lint-staged": "^15.1.0",
+    "picocolors": "^1.0.0",
     "prettier": "^3.1.0",
     "prettier-plugin-organize-imports": "^3.2.4",
     "prettier-plugin-tailwindcss": "^0.5.7",
@@ -73,31 +75,27 @@
     "tsup": "^7.2.0",
     "typescript": "^5.2.2",
     "vite": "^5.0.0",
-    "vitest": "^0.34.6",
-    "picocolors": "^1.0.0"
+    "vitest": "^0.34.6"
   },
   "simple-git-hooks": {
     "pre-commit": "bun run lint && bun run typecheck && bun lint-staged",
     "commit-msg": "node scripts/verifyCommit.js"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
+    "src/*.{js,jsx,ts,tsx}": [
       "eslint",
       "prettier --write"
     ],
     "package.json": [
       "prettier --write"
     ],
-    "*.{scss,less,styl,html}": [
-      "stylelint --fix",
-      "prettier --write"
-    ],
-    "*.md": [
+    "*.{scss,less,styl,html,.md}": [
       "prettier --write"
     ]
   },
   "dependencies": {
     "monaco-editor": "^0.44.0",
-    "react": "^18.2.0"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }
