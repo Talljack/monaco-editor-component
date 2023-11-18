@@ -2,7 +2,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select'
 import { SelectValue } from '@radix-ui/react-select'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import {
   Monaco,
   MonacoCodeEditorLanguage,
@@ -10,6 +10,7 @@ import {
   MonacoDiffEditor,
   MonacoEditor,
   MonacoEditorOptions,
+  MonacoEditorRef,
 } from '../../src'
 import './useWorker'
 
@@ -61,6 +62,12 @@ function App() {
     lineDecorationsWidth: 0,
     lineNumbersMinChars: 0,
   })
+  const editor = useRef<MonacoEditorRef>(null)
+
+  console.log('editor', editor)
+  setTimeout(() => {
+    console.log('editor', editor.current?.editor.current)
+  }, 2000)
   return (
     <div className='App flex flex-col'>
       <h1 className='mt-4 flex justify-center font-bold'>Monaco Editor Demo</h1>
@@ -140,6 +147,7 @@ function App() {
             onChange={newVal => {
               setInput(newVal)
             }}
+            ref={editor}
             language={language}
             theme={theme}
             className='ml-4 flex'

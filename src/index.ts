@@ -8,8 +8,9 @@ export type {
   MonacoCodeEditorTheme,
   MonacoEditorOptions,
   MonacoEditorProps,
+  MonacoEditorRef,
 } from './MonacoEditor'
 
-export type { MonacoCodeDiffEditor, MonacoCodeDiffOptions } from './MonacoDiffEditor'
+export type { MonacoCodeDiffEditor, MonacoCodeDiffOptions, MonacoDiffEditorRef } from './MonacoDiffEditor'
 
 export { MonacoDiffEditor, MonacoEditor, monaco }
