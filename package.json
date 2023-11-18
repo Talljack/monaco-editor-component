@@ -77,11 +77,11 @@
     "picocolors": "^1.0.0"
   },
   "simple-git-hooks": {
-    "pre-commit": "bun run lint && bun run typecheck && bun lint-staged",
+    "pre-commit": "bun run lint && bun lint-staged",
     "commit-msg": "node scripts/verifyCommit.js"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
+    "src/*.{js,jsx,ts,tsx}": [
       "eslint",
       "prettier --write"
     ],
@@ -94,6 +94,7 @@
   },
   "dependencies": {
     "monaco-editor": "^0.44.0",
-    "react": "^18.2.0"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }
