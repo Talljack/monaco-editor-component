@@ -1,12 +1,11 @@
 import * as monaco from 'monaco-editor'
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useMemo } from 'react'
 import type { MonacoCodeDiffEditor, MonacoDiffEditorProps } from './MonacoDiffEditor'
 import { formatWidth } from './utils'
 export function useCommonMonacoEditor<T extends MonacoCodeDiffEditor | monaco.editor.IStandaloneCodeEditor>(
   props: Pick<MonacoDiffEditorProps, 'width' | 'height' | 'theme' | 'options'>,
-  editor: T | null,
-): { editorRef: React.RefObject<HTMLDivElement>; defaultStyle: React.CSSProperties } {
-  const editorRef = useRef<HTMLDivElement>(null)
+  editorRef: React.RefObject<T>,
+): { defaultStyle: React.CSSProperties } {
   // style
   const formatedWidth = useMemo(() => formatWidth(props.width), [props])
   const formatedHeight = useMemo(() => formatWidth(props.height), [props.height])
@@ -16,28 +15,26 @@ export function useCommonMonacoEditor<T extends MonacoCodeDiffEditor | monaco.ed
   )
   // watch theme
   useEffect(() => {
-    if (editor && props.theme) {
+    if (editorRef?.current && props.theme) {
       monaco.editor.setTheme(props.theme)
     }
-  }, [props.theme, editor])
+  }, [props.theme, editorRef])
 
   // watch options
   useEffect(() => {
-    if (editor) {
-      editor.updateOptions(props.options ?? {})
+    if (editorRef?.current) {
+      editorRef.current.updateOptions(props.options ?? {})
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.options])
+  }, [props.options, editorRef])
 
-  // watch width & height
+  // watch width & height -> editor re layout
   useEffect(() => {
-    if (editor) {
-      editor.layout()
+    if (editorRef?.current) {
+      editorRef.current.layout()
     }
-  }, [formatedWidth, formatedHeight, editor])
+  }, [formatedWidth, formatedHeight, editorRef])
 
   return {
-    editorRef,
     defaultStyle,
   }
 }

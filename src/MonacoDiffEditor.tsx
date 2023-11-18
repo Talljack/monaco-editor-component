@@ -1,6 +1,6 @@
 import * as monaco from 'monaco-editor'
 import type { FC } from 'react'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import type { Monaco, MonacoEditorProps } from './MonacoEditor'
 import { useCommonMonacoEditor } from './useCommonEditor'
 import { noop } from './utils'
@@ -33,16 +33,18 @@ const MonacoDiffEditor: FC<MonacoDiffEditorProps> = ({
   originalUri,
   modifiedUri,
 }) => {
-  const [editor, setEditor] = useState<MonacoCodeDiffEditor | null>(null)
+  // const [editor, setEditor] = useState<MonacoCodeDiffEditor | null>(null)
+  const containerRef = useRef<HTMLDivElement | null>(null)
+  const editorRef = useRef<MonacoCodeDiffEditor | null>(null)
   // common effect
-  const { editorRef, defaultStyle } = useCommonMonacoEditor<MonacoCodeDiffEditor>(
+  const { defaultStyle } = useCommonMonacoEditor<MonacoCodeDiffEditor>(
     {
       width,
       height,
       theme,
       options,
     },
-    editor,
+    editorRef,
   )
   const handleMonacoEditorMounted = (editor: MonacoCodeDiffEditor) => {
     onEditorDidMount(editor)
@@ -54,54 +56,50 @@ const MonacoDiffEditor: FC<MonacoDiffEditorProps> = ({
     })
   }
   useEffect(() => {
-    if (editorRef) {
-      setEditor(editor => {
-        if (editor) return editor
-        // editor will mount hook
-        const userOptions = onEditorWillMount?.(monaco)
-        // modelUri
-        const originalModelUri = originalUri?.(monaco)
-        const modifiedModelUri = modifiedUri?.(monaco)
-        let originalModel = originalModelUri ? monaco.editor.getModel(originalModelUri) : null
-        if (!originalModel) {
-          originalModel = monaco.editor.createModel(originalValue ?? defaultValue, language, originalModelUri)
-        } else {
-          originalModel.setValue(originalValue ?? defaultValue)
-          monaco.editor.setModelLanguage(originalModel, language)
-        }
-        let modifiedModel = modifiedModelUri ? monaco.editor.getModel(modifiedModelUri) : null
-        if (!modifiedModel) {
-          modifiedModel = monaco.editor.createModel(value ?? defaultValue, language, originalModelUri)
-        } else {
-          modifiedModel.setValue(value ?? defaultValue)
-          monaco.editor.setModelLanguage(modifiedModel, language)
-        }
-        const monacoEditor = monaco.editor.createDiffEditor(editorRef.current!, {
-          ...{ ...options, ...userOptions },
-          theme,
-        })
-        monacoEditor.setModel({
-          original: originalModel,
-          modified: modifiedModel,
-        })
-        // mount hook
-        handleMonacoEditorMounted(monacoEditor)
-        return monacoEditor
+    if (containerRef) {
+      // editor will mount hook
+      const userOptions = onEditorWillMount?.(monaco)
+      // modelUri
+      const originalModelUri = originalUri?.(monaco)
+      const modifiedModelUri = modifiedUri?.(monaco)
+      let originalModel = originalModelUri ? monaco.editor.getModel(originalModelUri) : null
+      if (!originalModel) {
+        originalModel = monaco.editor.createModel(originalValue ?? defaultValue, language, originalModelUri)
+      } else {
+        originalModel.setValue(originalValue ?? defaultValue)
+        monaco.editor.setModelLanguage(originalModel, language)
+      }
+      let modifiedModel = modifiedModelUri ? monaco.editor.getModel(modifiedModelUri) : null
+      if (!modifiedModel) {
+        modifiedModel = monaco.editor.createModel(value ?? defaultValue, language, originalModelUri)
+      } else {
+        modifiedModel.setValue(value ?? defaultValue)
+        monaco.editor.setModelLanguage(modifiedModel, language)
+      }
+      editorRef.current = monaco.editor.createDiffEditor(containerRef.current!, {
+        ...{ ...options, ...userOptions },
+        theme,
       })
+      editorRef.current.setModel({
+        original: originalModel,
+        modified: modifiedModel,
+      })
+      // mount hook
+      handleMonacoEditorMounted(editorRef.current)
     }
 
     return () => {
-      onEditorWillUnmount(editor!)
-      editor?.dispose()
+      onEditorWillUnmount(editorRef.current!)
+      editorRef.current?.dispose()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editorRef])
   // watch language
   useEffect(() => {
-    if (editor) {
+    if (editorRef.current) {
       // update every model language
-      const originalModel = editor.getModel()?.original
-      const modifiedModel = editor.getModel()?.modified
+      const originalModel = editorRef.current.getModel()?.original
+      const modifiedModel = editorRef.current.getModel()?.modified
       if (originalModel) {
         monaco.editor.setModelLanguage(originalModel, language)
       }
@@ -109,29 +107,29 @@ const MonacoDiffEditor: FC<MonacoDiffEditorProps> = ({
         monaco.editor.setModelLanguage(modifiedModel, language)
       }
     }
-  }, [language, editor])
+  }, [language])
 
   // watch originalValue
   useEffect(() => {
-    if (editor) {
-      const model = editor.getModel()?.original
+    if (editorRef.current) {
+      const model = editorRef.current.getModel()?.original
       if (originalValue === model?.getValue()) return
       if (model) {
         model.setValue(originalValue ?? '')
       }
     }
-  }, [originalValue, editor])
+  }, [originalValue])
   // watch value
   useEffect(() => {
-    if (editor) {
-      const model = editor.getModel()?.modified
+    if (editorRef.current) {
+      const model = editorRef.current.getModel()?.modified
       if (value === model?.getValue()) return
       if (model) {
         model.setValue(value ?? '')
       }
     }
-  }, [value, editor])
-  return <div ref={editorRef} className={className} style={{ ...defaultStyle, ...style }}></div>
+  }, [value])
+  return <div ref={containerRef} className={className} style={{ ...defaultStyle, ...style }}></div>
 }
 
 export default MonacoDiffEditor
