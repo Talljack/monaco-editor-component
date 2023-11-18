@@ -6,6 +6,12 @@ import { formatWidth, noop } from './utils'
 
 export type Monaco = typeof monaco
 
+export type MonacoEditorLanguage = EditorLanguage
+
+export type MonacoEditorTheme = monaco.editor.BuiltinTheme
+
+export type MonacoOptions = monaco.editor.IStandaloneEditorConstructionOptions
+
 export interface MonacoEditorProps {
   value: string | null
   className?: string
@@ -37,7 +43,6 @@ const MonacoEditor: FC<MonacoEditorProps> = ({
   onEditorDidMount = noop,
   onEditorWillUnmount = noop,
   onEditorWillMount = noop,
-  modelUri = () => monaco.Uri.parse(''),
 }) => {
   const editorRef = useRef<HTMLDivElement>(null)
   const [editor, setEditor] = useState<monaco.editor.IStandaloneCodeEditor | null>(null)
@@ -53,32 +58,19 @@ const MonacoEditor: FC<MonacoEditorProps> = ({
   const handleMonacoEditorMounted = (editor: monaco.editor.IStandaloneCodeEditor) => {
     onEditorDidMount(editor)
     editor.onDidChangeModelContent(e => {
-      const value = editor.getValue()
-      onChange?.(value, e)
+      const newValue = editor.getValue()
+      onChange?.(newValue, e)
     })
   }
 
   useEffect(() => {
     if (editorRef) {
-      setEditor(editor => {
-        if (editor) return editor
+      setEditor(() => {
         // editor will mount hook
         const userOptions = onEditorWillMount?.(monaco)
-        // modelUri
-        const uri = modelUri?.(monaco)
-        let model = uri ? monaco.editor.getModel(uri) : null
-        if (!model) {
-          model = monaco.editor.createModel(value ?? defaultValue, language, uri)
-        } else {
-          // update value and language use same model
-          model.setValue(value ?? defaultValue)
-          monaco.editor.setModelLanguage(model, language)
-        }
         const monacoEditor = monaco.editor.create(editorRef.current!, {
-          model,
           value: value ?? defaultValue,
           ...{ ...options, ...userOptions },
-          language,
           theme,
         })
         // mount hook
@@ -126,6 +118,18 @@ const MonacoEditor: FC<MonacoEditorProps> = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formatedWidth, formatedHeight])
+
+  // watch value
+  useEffect(() => {
+    if (editor) {
+      if (value === editor.getValue()) return
+      const model = editor.getModel()
+      if (model) {
+        model.setValue(value ?? '')
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value])
   return <div ref={editorRef} className={className} style={{ ...defaultStyle, ...style }} />
 }
 

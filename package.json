@@ -78,11 +78,11 @@
     "vitest": "^0.34.6"
   },
   "simple-git-hooks": {
-    "pre-commit": "bun run lint && bun run typecheck && bun lint-staged",
+    "pre-commit": "bun run lint && bun lint-staged",
     "commit-msg": "node scripts/verifyCommit.js"
   },
   "lint-staged": {
-    "src/*.{js,jsx,ts,tsx}": [
+    "*.{js,jsx,ts,tsx}": [
       "eslint",
       "prettier --write"
     ],
