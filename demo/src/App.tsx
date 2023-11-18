@@ -2,7 +2,6 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select'
 import { SelectValue } from '@radix-ui/react-select'
-import { useRef, useState } from 'react'
 import {
   Monaco,
   MonacoCodeEditorLanguage,
@@ -11,7 +10,8 @@ import {
   MonacoEditor,
   MonacoEditorOptions,
   MonacoEditorRef,
-} from '../../src'
+} from 'monaco-editor-component'
+import { useRef, useState } from 'react'
 import './useWorker'
 
 const languages: MonacoCodeEditorLanguage[] = [
