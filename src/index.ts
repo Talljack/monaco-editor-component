@@ -1,5 +1,15 @@
 import * as monaco from 'monaco-editor'
+import MonacoDiffEditor from './MonacoDiffEditor'
 import MonacoEditor from './MonacoEditor'
-export type { Monaco, MonacoEditorLanguage, MonacoEditorProps, MonacoEditorTheme, MonacoOptions } from './MonacoEditor'
+export type {
+  Monaco,
+  MonacoCodeEditor,
+  MonacoCodeEditorLanguage,
+  MonacoCodeEditorTheme,
+  MonacoEditorOptions,
+  MonacoEditorProps,
+} from './MonacoEditor'
 
-export { MonacoEditor, monaco }
+export type { MonacoCodeDiffEditor, MonacoCodeDiffOptions } from './MonacoDiffEditor'
+
+export { MonacoDiffEditor, MonacoEditor, monaco }

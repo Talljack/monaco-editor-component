@@ -1,4 +1,5 @@
-export const formatWidth = (width: string | number) => {
+export const formatWidth = (width: string | number | undefined) => {
+  if (!width) return '100%'
   if (typeof width === 'number') {
     return `${width}px`
   }

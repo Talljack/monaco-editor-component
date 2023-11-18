@@ -3,10 +3,17 @@ import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select'
 import { SelectValue } from '@radix-ui/react-select'
 import { useState } from 'react'
-import { Monaco, MonacoEditor, MonacoEditorLanguage, MonacoEditorTheme, MonacoOptions } from '../../src'
+import {
+  Monaco,
+  MonacoCodeEditorLanguage,
+  MonacoCodeEditorTheme,
+  MonacoDiffEditor,
+  MonacoEditor,
+  MonacoEditorOptions,
+} from '../../src'
 import './useWorker'
 
-const languages: MonacoEditorLanguage[] = [
+const languages: MonacoCodeEditorLanguage[] = [
   'css',
   'dart',
   'dockerfile',
@@ -40,14 +47,14 @@ const languages: MonacoEditorLanguage[] = [
   'xml',
   'yaml',
 ]
-const themes: MonacoEditorTheme[] = ['vs', 'vs-dark', 'hc-black', 'hc-light']
+const themes: MonacoCodeEditorTheme[] = ['vs', 'vs-dark', 'hc-black', 'hc-light']
 function App() {
   const [input, setInput] = useState('')
-  const [language, setLanguage] = useState<MonacoEditorLanguage>('javascript')
-  const [theme, setTheme] = useState<MonacoEditorTheme>('vs-dark')
+  const [language, setLanguage] = useState<MonacoCodeEditorLanguage>('javascript')
+  const [theme, setTheme] = useState<MonacoCodeEditorTheme>('vs-dark')
   const [width, setWidth] = useState('500')
   const [height, setHeight] = useState('600')
-  const [options, setOptions] = useState<MonacoOptions>({
+  const [options, setOptions] = useState<MonacoEditorOptions>({
     lineNumbers: 'off',
     folding: false,
     glyphMargin: false,
@@ -56,12 +63,12 @@ function App() {
   })
   return (
     <div className='App flex flex-col'>
-      <h1 className='mt-8 flex justify-center font-bold'>Monaco Editor</h1>
+      <h1 className='mt-4 flex justify-center font-bold'>Monaco Editor Demo</h1>
       <div className='flex gap-6 p-10'>
         <div className='options flex h-[800px] flex-col gap-2'>
           <div className='language'>
             <Label>language</Label>
-            <Select value={language} onValueChange={(newValue: MonacoEditorLanguage) => setLanguage(newValue)}>
+            <Select value={language} onValueChange={(newValue: MonacoCodeEditorLanguage) => setLanguage(newValue)}>
               <SelectTrigger className='w-[180px]'>
                 <SelectValue placeholder='Please Select' />
               </SelectTrigger>
@@ -76,7 +83,7 @@ function App() {
           </div>
           <div className='theme'>
             <Label>theme</Label>
-            <Select value={theme} onValueChange={(newValue: MonacoEditorTheme) => setTheme(newValue)}>
+            <Select value={theme} onValueChange={(newValue: MonacoCodeEditorTheme) => setTheme(newValue)}>
               <SelectTrigger className='w-[180px]'>
                 <SelectValue placeholder='Please Select' />
               </SelectTrigger>
@@ -126,29 +133,44 @@ function App() {
             />
           </div>
         </div>
-        <MonacoEditor
-          value={input}
-          onChange={newVal => {
-            setInput(newVal)
-          }}
-          language={language}
-          theme={theme}
-          className='ml-4 flex'
-          width={width}
-          height={height}
-          options={options}
-          onEditorWillMount={(monaco: Monaco) => {
-            console.log('monaco', monaco)
-            return {
-              lineNumbers: 'on',
-              folding: true,
-              glyphMargin: true,
-            }
-          }}
-          onEditorDidMount={editor => {
-            console.log('editor', editor)
-          }}
-        />
+        <div>
+          <Label>Monaco Editor</Label>
+          <MonacoEditor
+            value={input}
+            onChange={newVal => {
+              setInput(newVal)
+            }}
+            language={language}
+            theme={theme}
+            className='ml-4 flex'
+            width={width}
+            height={height}
+            options={options}
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            onEditorWillMount={(monaco: Monaco) => {
+              return {
+                lineNumbers: 'on',
+                folding: true,
+                glyphMargin: true,
+              }
+            }}
+          />
+        </div>
+        <div>
+          <Label>Monaco Diff Editor</Label>
+          <MonacoDiffEditor
+            value={input}
+            originalValue={'const a = 1;'}
+            language={language}
+            theme={theme}
+            onChange={newValue => {
+              setInput(newValue)
+            }}
+            options={options}
+            width={width}
+            height={height}
+          />
+        </div>
       </div>
     </div>
   )
