@@ -20,7 +20,10 @@
     "monaco-editor",
     "tailwindcss",
     "monaco-editor-component",
-    "monaco-diff-editor"
+    "monaco-diff-editor",
+    "vue",
+    "monaco-editor-vue",
+    "monaco-editor-react"
   ],
   "sideEffects": false,
   "exports": {
@@ -28,11 +31,21 @@
       "types": "./dist/index.d.ts",
       "require": "./dist/index.cjs",
       "import": "./dist/index.js"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "require": "./dist/react.cjs",
+      "import": "./dist/react.js"
+    },
+    "./vue": {
+      "types": "./dist/vue.d.ts",
+      "require": "./dist/vue.cjs",
+      "import": "./dist/vue.js"
     }
   },
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/react.js",
+  "module": "./dist/react.js",
+  "types": "./dist/type.d.ts",
   "files": [
     "dist"
   ],
@@ -96,6 +109,7 @@
   "dependencies": {
     "monaco-editor": "^0.44.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "vue": "^3.3.8"
   }
 }

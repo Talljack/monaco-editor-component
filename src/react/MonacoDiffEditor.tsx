@@ -1,19 +1,8 @@
+import type { MonacoCodeDiffEditor, MonacoDiffEditorProps, MonacoDiffEditorRef } from '@/type'
 import * as monaco from 'monaco-editor'
-import { MutableRefObject, forwardRef, useEffect, useImperativeHandle, useRef } from 'react'
-import type { Monaco, MonacoEditorProps } from './MonacoEditor'
+import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react'
+import { noop } from '../utils'
 import { useCommonMonacoEditor } from './useCommonEditor'
-import { noop } from './utils'
-
-export type MonacoCodeDiffEditor = monaco.editor.IStandaloneDiffEditor
-
-export type MonacoCodeDiffOptions = monaco.editor.IStandaloneDiffEditorConstructionOptions
-
-export type MonacoDiffEditorProps = Omit<MonacoEditorProps<MonacoCodeDiffEditor, MonacoCodeDiffOptions>, 'modelUri'> & {
-  originalValue: string
-  originalUri?: (monaco: Monaco) => monaco.Uri
-  modifiedUri?: (monaco: Monaco) => monaco.Uri
-}
-export type MonacoDiffEditorRef = { editor: MutableRefObject<MonacoCodeDiffEditor | null> }
 
 const MonacoDiffEditor = forwardRef<MonacoDiffEditorRef, MonacoDiffEditorProps>(
   (
