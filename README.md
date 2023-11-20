@@ -2,7 +2,7 @@
 
 <div align="center">
 
-React component based on [Monaco Editor](https://github.com/Microsoft/monaco-editor).
+Web component based on [Monaco Editor](https://github.com/Microsoft/monaco-editor). Support Vue and React.
 
 [![NPM downloads](https://img.shields.io/npm/dm/monaco-editor-component?style=flat&label=&color=cb3837&labelColor=cb0000&logo=npm)](https://www.npmjs.com/package/monaco-editor-component)
 
