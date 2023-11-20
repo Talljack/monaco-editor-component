@@ -1,38 +1,8 @@
+import type { MonacoCodeEditor, MonacoEditorProps, MonacoEditorRef } from '@/type'
 import * as monaco from 'monaco-editor'
-import type { EditorLanguage } from 'monaco-editor/esm/metadata'
-import type { MutableRefObject } from 'react'
-import React, { forwardRef, useEffect, useImperativeHandle, useRef } from 'react'
+import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react'
+import { noop } from '../utils'
 import { useCommonMonacoEditor } from './useCommonEditor'
-import { noop } from './utils'
-
-export type Monaco = typeof monaco
-
-export type MonacoCodeEditor = monaco.editor.IStandaloneCodeEditor
-
-export type MonacoCodeEditorLanguage = EditorLanguage
-
-export type MonacoCodeEditorTheme = monaco.editor.BuiltinTheme
-
-export type MonacoEditorOptions = monaco.editor.IStandaloneEditorConstructionOptions
-
-export interface MonacoEditorProps<T = MonacoCodeEditor, U = MonacoEditorOptions> {
-  value: string | null
-  className?: string
-  options?: U
-  width?: string | number
-  height?: string | number
-  language?: EditorLanguage
-  theme?: monaco.editor.BuiltinTheme
-  style?: React.CSSProperties
-  onChange?: (value: string, e: monaco.editor.IModelContentChangedEvent) => void
-  defaultValue?: string
-  onEditorDidMount?: (editor: T, monaco: Monaco) => void
-  onEditorWillUnmount?: (editor: T, monaco: Monaco) => void
-  onEditorWillMount?: (monaco: Monaco) => U
-  modelUri?: (monaco: Monaco) => monaco.Uri
-}
-
-export type MonacoEditorRef = { editor: MutableRefObject<MonacoCodeEditor | null> }
 
 const MonacoEditor = forwardRef<MonacoEditorRef, MonacoEditorProps>(
   (
@@ -54,7 +24,6 @@ const MonacoEditor = forwardRef<MonacoEditorRef, MonacoEditorProps>(
     },
     ref,
   ) => {
-    // const [editor, setEditor] = useState<MonacoCodeEditor | null>(null)
     const containerRef = useRef<HTMLDivElement>(null)
     const editorRef = useRef<MonacoCodeEditor | null>(null)
     const { defaultStyle } = useCommonMonacoEditor<MonacoCodeEditor>(

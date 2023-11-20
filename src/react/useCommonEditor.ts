@@ -1,13 +1,13 @@
+import type { MonacoCodeDiffEditor, MonacoDiffEditorProps } from '@/type'
 import * as monaco from 'monaco-editor'
 import { useEffect, useMemo } from 'react'
-import type { MonacoCodeDiffEditor, MonacoDiffEditorProps } from './MonacoDiffEditor'
-import { formatWidth } from './utils'
+import { formatWidth } from '../utils'
 export function useCommonMonacoEditor<T extends MonacoCodeDiffEditor | monaco.editor.IStandaloneCodeEditor>(
   props: Pick<MonacoDiffEditorProps, 'width' | 'height' | 'theme' | 'options'>,
   editorRef: React.RefObject<T>,
 ): { defaultStyle: React.CSSProperties } {
   // style
-  const formatedWidth = useMemo(() => formatWidth(props.width), [props])
+  const formatedWidth = useMemo(() => formatWidth(props.width), [props.width])
   const formatedHeight = useMemo(() => formatWidth(props.height), [props.height])
   const defaultStyle = useMemo(
     () => ({ width: formatedWidth, height: formatedHeight }),
