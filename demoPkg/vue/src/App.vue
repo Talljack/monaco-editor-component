@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { MonacoEditor, MonacoDiffEditor } from '../../../src/vue/index'
-import type { MonacoCodeEditorLanguage, MonacoCodeEditorTheme, MonacoEditorOptions, Monaco } from '../../../src/vue/index'
+import { MonacoEditor, MonacoDiffEditor } from 'monaco-editor-component/vue'
+import type { MonacoCodeEditorLanguage, MonacoCodeEditorTheme, MonacoEditorOptions, Monaco } from 'monaco-editor-component/vue'
 import { ref } from 'vue'
 import { NInput, NSelect, NSpace } from 'naive-ui'
 import "./useWorker"
-import { MonacoCodeEditor } from '../../../src/type';
+import { MonacoCodeEditor } from 'monaco-editor-component';
 
 const languages: MonacoCodeEditorLanguage[] = [
   'css',
