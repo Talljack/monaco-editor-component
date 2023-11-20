@@ -1,7 +1,7 @@
 import type { MonacoCodeDiffEditor, MonacoDiffEditorProps } from '@/type'
 import * as monaco from 'monaco-editor'
 import type { PropType } from 'vue'
-import { computed, defineComponent, defineExpose, h, nextTick, onUnmounted, ref, watch, watchEffect } from 'vue'
+import { computed, defineComponent, defineExpose, h, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { formatWidth } from '../utils'
 const props = {
   value: {
@@ -88,7 +88,7 @@ const MonacoDiffEditor = defineComponent({
       })
     }
 
-    const stop = watchEffect(() => {
+    onMounted(() => {
       if (containerRef.value) {
         // editor will mount hook
         const userOptions = props.onEditorWillMount?.(monaco)
@@ -126,10 +126,6 @@ const MonacoDiffEditor = defineComponent({
           modified: modifiedModel,
         })
         handleMonacoEditorMounted(editor)
-      }
-      return () => {
-        props.onEditorWillUnmount?.(editor!, monaco)
-        editor?.dispose()
       }
     })
     const formatedWidth = computed(() => formatWidth(props.width))
@@ -219,12 +215,13 @@ const MonacoDiffEditor = defineComponent({
       },
     )
 
-    defineExpose({
-      editor,
+    onUnmounted(() => {
+      props?.onEditorWillUnmount?.(editor!, monaco)
+      editor?.dispose()
     })
 
-    onUnmounted(() => {
-      stop()
+    defineExpose({
+      container: containerRef,
     })
 
     return () => {

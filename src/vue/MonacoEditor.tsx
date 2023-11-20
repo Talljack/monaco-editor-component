@@ -69,8 +69,6 @@ const MonacoEditor = defineComponent({
   setup(props, { emit }) {
     const containerRef = ref(null)
     let editor: MonacoCodeEditor | null = null
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    // const { defaultStyle } = useCommonMonacoEditor(props, editor as unknown as MonacoCodeEditor)
     const handleMonacoEditorMounted = (editor: MonacoCodeEditor) => {
       props.onEditorDidMount?.(editor, monaco)
       editor.onDidChangeModelContent(e => {
@@ -173,15 +171,12 @@ const MonacoEditor = defineComponent({
         }
       },
     )
-
-    defineExpose({
-      editor,
-    })
-
     onUnmounted(() => {
-      // stop()
       props?.onEditorWillUnmount?.(editor!, monaco)
       editor?.dispose()
+    })
+    defineExpose({
+      container: containerRef,
     })
     return () => {
       return h('div', {
