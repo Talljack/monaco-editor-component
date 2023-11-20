@@ -97,7 +97,7 @@ const updateMonacoEditor = (editor: MonacoCodeEditor, monaco: Monaco) => {
       </div>
     </div>
     <MonacoEditor v-model:value="input" :theme="theme" :width="width" :language="language" :height="height"
-      :options="options" ref="monacoEditorRef" :onEditorWillMount="(monaco: Monaco) => {
+      :options="options" :onEditorWillMount="(monaco: Monaco) => {
         return {
           lineNumbers: 'on',
           folding: true,
