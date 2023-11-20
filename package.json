@@ -1,7 +1,7 @@
 {
   "name": "monaco-editor-component",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.0.7",
   "packageManager": "bun@1.0.11",
   "description": "Monaco Editor and Viewer Base on React and Tailwindcss.",
   "author": "Talljack",
@@ -29,22 +29,35 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     },
     "./react": {
-      "types": "./dist/react.d.ts",
-      "require": "./dist/react.cjs",
-      "import": "./dist/react.js"
+      "types": "./dist/react/index.d.ts",
+      "import": "./dist/react/index.js",
+      "require": "./dist/react/index.cjs"
     },
     "./vue": {
-      "types": "./dist/vue.d.ts",
-      "require": "./dist/vue.cjs",
-      "import": "./dist/vue.js"
+      "types": "./dist/vue/index.d.ts",
+      "import": "./dist/vue/index.js",
+      "require": "./dist/vue/index.cjs"
     }
   },
-  "main": "./dist/react.js",
-  "module": "./dist/react.js",
+  "typesVersions": {
+    "*": {
+      ".": [
+        "./dist/index.d.ts"
+      ],
+      "react": [
+        "./dist/react/index.d.ts"
+      ],
+      "vue": [
+        "./dist/vue/index.d.ts"
+      ]
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
   "types": "./dist/type.d.ts",
   "files": [
     "dist"

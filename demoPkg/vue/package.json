@@ -1,12 +1,14 @@
 {
   "name": "vue",
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "serve": "vite preview"
   },
   "dependencies": {
+    "monaco-editor-component": "^0.0.6",
     "vue": "^3.3.8"
   },
   "devDependencies": {
