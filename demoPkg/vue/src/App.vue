@@ -45,7 +45,7 @@ const themes: MonacoCodeEditorTheme[] = ['vs', 'vs-dark', 'hc-black', 'hc-light'
 const input = ref('const a = 123;')
 const language = ref<MonacoCodeEditorLanguage>('javascript')
 const languageOptions = languages.map((item) => ({ label: item, value: item }))
-const theme = ref('vs-dark')
+const theme = ref<MonacoCodeEditorTheme>('vs-dark')
 const themeOptions = themes.map((item) => ({ label: item, value: item }))
 const width = ref('300')
 const height = ref('600')
