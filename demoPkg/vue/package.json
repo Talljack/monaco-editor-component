@@ -1,6 +1,6 @@
 {
-  "name": "vue",
-  "version": "0.0.0",
+  "name": "vue-demo",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -8,7 +8,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "monaco-editor-component": "^0.0.6",
+    "monaco-editor-component": "^0.0.7",
     "vue": "^3.3.8"
   },
   "devDependencies": {

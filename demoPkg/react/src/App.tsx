@@ -10,7 +10,7 @@ import {
   MonacoEditor,
   MonacoEditorOptions,
   MonacoEditorRef,
-} from 'monaco-editor-component'
+} from 'monaco-editor-component/react'
 import { useRef, useState } from 'react'
 import './useWorker'
 
