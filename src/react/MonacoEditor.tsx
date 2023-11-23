@@ -1,9 +1,9 @@
 import type { MonacoCodeEditor, MonacoEditorProps, MonacoEditorRef } from '@/type'
 import * as monaco from 'monaco-editor'
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react'
-import { noop } from '../utils'
+import { noop, setupTailwindcss } from '../utils'
 import { useCommonMonacoEditor } from './useCommonEditor'
-
+setupTailwindcss(monaco)
 const MonacoEditor = forwardRef<MonacoEditorRef, MonacoEditorProps>(
   (
     {

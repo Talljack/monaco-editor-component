@@ -2,7 +2,8 @@ import type { MonacoCodeEditor, MonacoEditorProps } from '@/type'
 import * as monaco from 'monaco-editor'
 import type { PropType } from 'vue'
 import { computed, defineComponent, defineExpose, h, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
-import { formatWidth } from '../utils'
+import { formatWidth, setupTailwindcss } from '../utils'
+setupTailwindcss(monaco)
 const props = {
   value: {
     type: String as PropType<MonacoEditorProps['value']>,
