@@ -2,15 +2,14 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select'
 import { SelectValue } from '@radix-ui/react-select'
-import {
+import type {
   Monaco,
   MonacoCodeEditorLanguage,
   MonacoCodeEditorTheme,
-  MonacoDiffEditor,
-  MonacoEditor,
   MonacoEditorOptions,
   MonacoEditorRef,
 } from 'monaco-editor-component/react'
+import { MonacoDiffEditor, MonacoEditor } from 'monaco-editor-component/react'
 import { useRef, useState } from 'react'
 import './useWorker'
 
