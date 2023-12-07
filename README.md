@@ -11,7 +11,7 @@ Web component based on [Monaco Editor](https://github.com/Microsoft/monaco-edito
 ## Installation
 
 ```bash
-npm install monaco-editor-component
+[npm|yarn|pnpm] install monaco-editor-component
 
 OR
 
@@ -97,7 +97,7 @@ createApp(app).render(<App />)
 | onEditorWillUnmount | (editor: MonacoCodeEditor, monaco: Monaco) => void                  | noop       | An event emitted when the editor will unmount (similar to componentWillUnmount of React).  |
 | modelUri            | (monaco: Monaco) => monaco.Uri                                      | undefined  | The uri of the model.                                                                      |
 
-More **options** see [monaco-editor](https://microsoft.github.io/monaco-editor/docs.html#interfaces/editor.IStandaloneEditorConstructionOptions.html)
+For more **options** see [monaco-editor](https://microsoft.github.io/monaco-editor/docs.html#interfaces/editor.IStandaloneEditorConstructionOptions.html)
 
 ### MonacoDiffEditor
 
@@ -140,43 +140,39 @@ const model = monacoEditor.value.getModel()
 
 ### Integrating the ESM version of the Monaco Editor
 
-For Vite you only need to implement the `getWorker` function (NOT the `getWorkerUrl`) to use Vite's output.
+For Vite, you only need to implement the `getWorker` function (NOT the `getWorkerUrl`) to use Vite's output.
 
-Other's like Webpack see [monaco-editor worker](https://github.com/microsoft/monaco-editor/blob/main/docs/integrate-esm.md)
+Others like Webpack see [monaco-editor worker](https://github.com/microsoft/monaco-editor/blob/main/docs/integrate-esm.md)
 
 ```typescript
 // Vite
 // worker.ts file
-import * as monaco from 'monaco-editor';
+import * as monaco from 'monaco-editor'
+import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
+import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker'
+import htmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker'
+import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker'
+import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 self.MonacoEnvironment = {
-	getWorker: function (workerId, label) {
-		const getWorkerModule = (moduleUrl, label) => {
-			return new Worker(self.MonacoEnvironment.getWorkerUrl(moduleUrl), {
-				name: label,
-				type: 'module'
-			});
-		};
-
-		switch (label) {
-			case 'json':
-				return getWorkerModule('/monaco-editor/esm/vs/language/json/json.worker?worker', label);
-			case 'css':
-			case 'scss':
-			case 'less':
-				return getWorkerModule('/monaco-editor/esm/vs/language/css/css.worker?worker', label);
-			case 'html':
-			case 'handlebars':
-			case 'razor':
-				return getWorkerModule('/monaco-editor/esm/vs/language/html/html.worker?worker', label);
-			case 'typescript':
-			case 'javascript':
-				return getWorkerModule('/monaco-editor/esm/vs/language/typescript/ts.worker?worker', label);
-			default:
-				return getWorkerModule('/monaco-editor/esm/vs/editor/editor.worker?worker', label);
-		}
-	}
-};
+  getWorker(_: unknown, label: string) {
+    if (label === 'json') {
+      return new jsonWorker()
+    }
+    if (label === 'css' || label === 'scss' || label === 'less') {
+      return new cssWorker()
+    }
+    if (label === 'html' || label === 'handlebars' || label === 'razor') {
+      return new htmlWorker()
+    }
+    if (label === 'typescript' || label === 'javascript') {
+      return new tsWorker()
+    }
+    return new editorWorker()
+  },
+}
 
 // App.tsx
 import { MonacoEditor } from 'monaco-editor-component/react'
@@ -185,7 +181,7 @@ import './worker'
 // usage of MonacoEditor...
 ```
 
-Vue usage is similar to React.(when you use vite).
+Vue usage is similar to React (when you use Vite).
 
 ## License
 
