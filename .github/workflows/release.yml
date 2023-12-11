@@ -13,9 +13,12 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: oven-sh/setup-bun@v1
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        id: pnpm-install
         with:
-          bun-version: latest
+          version: 8
+          run_install: false
 
       - name: Set node
         uses: actions/setup-node@v4
