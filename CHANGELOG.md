@@ -1,3 +1,11 @@
+# CHANGELOG
+
+## 0.0.8
+
+## Fixes
+
+- Remove package.json `postinstall` script when github actions is running throw error.
+
 ## 0.0.7
 
 ## Features
