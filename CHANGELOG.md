@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 0.0.9
+
+## Fixes
+
+- Remove `monaco-tailwindcss` feature, because it's throw error when use `html` language.
+
 ## 0.0.8
 
 ## Fixes
