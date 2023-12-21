@@ -1,7 +1,7 @@
 {
   "name": "monaco-editor-component",
   "type": "module",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "packageManager": "pnpm@8.12.1",
   "description": "Monaco Editor and Viewer Base on React and Tailwindcss.",
   "author": "Talljack",

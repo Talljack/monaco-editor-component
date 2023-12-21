@@ -124,6 +124,9 @@ const MonacoDiffEditor = forwardRef<MonacoDiffEditorRef, MonacoDiffEditorProps>(
     useImperativeHandle(ref, () => ({
       editor: editorRef,
     }))
+    window.addEventListener('resize', () => {
+      editorRef.current?.layout()
+    })
     return <div ref={containerRef} className={className} style={{ ...defaultStyle, ...style }}></div>
   },
 )

@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 0.1.0
+
+## Features
+
+- Support `resize` layout for `MonacoEditor` and `MonacoDiffEditor` components.
+
 ## 0.0.9
 
 ## Fixes

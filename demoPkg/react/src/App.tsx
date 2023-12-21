@@ -68,7 +68,7 @@ function App() {
     console.log('editor', editor.current?.editor.current)
   }, 2000)
   return (
-    <div className='App flex flex-col'>
+    <div className='App flex h-screen flex-col'>
       <h1 className='mt-4 flex justify-center font-bold'>Monaco Editor Demo</h1>
       <div className='flex gap-6 p-10'>
         <div className='options flex h-[800px] flex-col gap-2'>
