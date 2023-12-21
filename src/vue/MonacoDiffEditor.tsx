@@ -223,6 +223,9 @@ const MonacoDiffEditor = defineComponent({
     defineExpose({
       container: containerRef,
     })
+    window.addEventListener('resize', () => {
+      editor?.layout()
+    })
 
     return () => {
       return h('div', {

@@ -32,6 +32,7 @@ module.exports = {
     'react/prop-types': 'off',
     '@typescript-eslint/no-var-requires': 'off',
     '@typescrpt-eslint/no-unused-vars': 'off',
+    'prettier/prettier': 'off',
   },
   settings: {
     react: {

@@ -178,6 +178,9 @@ const MonacoEditor = defineComponent({
     defineExpose({
       container: containerRef,
     })
+    window.addEventListener('resize', () => {
+      editor?.layout()
+    })
     return () => {
       return h('div', {
         class: `editor ${props.class}`,
