@@ -8,7 +8,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "monaco-editor-component": "^0.0.7",
+    "monaco-editor-component": "^0.1.0",
     "vue": "^3.3.8"
   },
   "devDependencies": {
