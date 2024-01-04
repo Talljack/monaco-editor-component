@@ -2,8 +2,8 @@
   "name": "monaco-editor-component",
   "type": "module",
   "version": "0.1.0",
-  "packageManager": "pnpm@8.13.1",
-  "description": "Monaco Editor and Viewer Base on React and Tailwindcss.",
+  "packageManager": "pnpm@8.14.0",
+  "description": "Monaco Editor and DiffEditor, support Vue and React.",
   "author": "Talljack",
   "license": "MIT",
   "homepage": "https://github.com/Talljack/monaco-editor-component#readme",
@@ -76,11 +76,11 @@
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
-    "@types/node": "^20.10.4",
+    "@types/node": "^20.10.6",
     "@types/react": "^18.2.46",
     "@types/react-dom": "^18.2.17",
-    "@typescript-eslint/eslint-plugin": "^6.16.0",
-    "@typescript-eslint/parser": "^6.16.0",
+    "@typescript-eslint/eslint-plugin": "^6.17.0",
+    "@typescript-eslint/parser": "^6.17.0",
     "bumpp": "^9.2.1",
     "eslint": "^8.55.0",
     "eslint-config-prettier": "^9.1.0",
@@ -100,7 +100,7 @@
     "tsup": "^8.0.1",
     "typescript": "^5.3.3",
     "vite": "^5.0.9",
-    "vitest": "^1.1.0"
+    "vitest": "^1.1.1"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm run lint && pnpm lint-staged",
@@ -122,6 +122,6 @@
     "monaco-editor": "^0.45.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "vue": "^3.4.1"
+    "vue": "^3.4.5"
   }
 }
