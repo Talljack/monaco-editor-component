@@ -76,7 +76,7 @@
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
-    "@types/node": "^20.11.15",
+    "@types/node": "^20.11.17",
     "@types/react": "^18.2.55",
     "@types/react-dom": "^18.2.18",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
@@ -98,7 +98,7 @@
     "tailwindcss-animate": "^1.0.7",
     "tsup": "^8.0.1",
     "typescript": "^5.3.3",
-    "vite": "^5.0.12",
+    "vite": "^5.1.1",
     "vitest": "^1.2.2"
   },
   "simple-git-hooks": {
@@ -121,6 +121,6 @@
     "monaco-editor": "^0.45.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "vue": "^3.4.15"
+    "vue": "^3.4.18"
   }
 }
