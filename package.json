@@ -2,7 +2,7 @@
   "name": "monaco-editor-component",
   "type": "module",
   "version": "0.1.0",
-  "packageManager": "pnpm@8.15.1",
+  "packageManager": "pnpm@8.15.2",
   "description": "Monaco Editor and DiffEditor, support Vue and React.",
   "author": "Talljack",
   "license": "MIT",
@@ -96,7 +96,7 @@
     "simple-git-hooks": "^2.9.0",
     "tailwindcss": "^3.4.1",
     "tailwindcss-animate": "^1.0.7",
-    "tsup": "^8.0.1",
+    "tsup": "^8.0.2",
     "typescript": "^5.3.3",
     "vite": "^5.1.1",
     "vitest": "^1.2.2"
