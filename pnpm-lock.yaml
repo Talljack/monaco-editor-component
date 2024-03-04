@@ -74,8 +74,8 @@ devDependencies:
     specifier: ^5.0.5
     version: 5.0.5
   simple-git-hooks:
-    specifier: ^2.9.0
-    version: 2.9.0
+    specifier: ^2.10.0
+    version: 2.10.0
   tailwindcss:
     specifier: ^3.4.1
     version: 3.4.1
@@ -3518,8 +3518,8 @@ packages:
     engines: {node: '>=14'}
     dev: true
 
-  /simple-git-hooks@2.9.0:
-    resolution: {integrity: sha512-waSQ5paUQtyGC0ZxlHmcMmD9I1rRXauikBwX31bX58l5vTOhCEcBC5Bi+ZDkPXTjDnZAF8TbCqKBY+9+sVPScw==}
+  /simple-git-hooks@2.10.0:
+    resolution: {integrity: sha512-TtCytVYfV77pILCkzVxpOSgYKHQyaO7fBI/iwG5bLGb0dIo/v/K1Y1IZ5DN40RQu6WNNJiN0gkuRvSYjxOhFog==}
     hasBin: true
     requiresBuild: true
     dev: true
