@@ -1,6 +1,7 @@
 import * as monaco from 'monaco-editor'
 import MonacoDiffEditor from './MonacoDiffEditor'
 import MonacoEditor from './MonacoEditor'
+
 export type {
   Monaco,
   MonacoCodeDiffEditor,

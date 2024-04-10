@@ -1,21 +1,21 @@
 {
   "compilerOptions": {
-    "rootDir": ".",
-    "outDir": "./dist",
     "target": "es2020",
-    "module": "esnext",
-    "lib": ["esnext", "dom"],
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "strict": true,
-    "strictNullChecks": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
     "jsx": "react-jsx",
-    "types": ["monaco-editor"],
+    "lib": ["esnext", "dom"],
+    "rootDir": ".",
+    "module": "esnext",
+    "moduleResolution": "node",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "resolveJsonModule": true,
+    "types": ["monaco-editor"],
+    "strict": true,
+    "strictNullChecks": true,
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true
   }
 }

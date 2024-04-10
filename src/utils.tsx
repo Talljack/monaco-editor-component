@@ -1,16 +1,15 @@
-export const formatWidth = (width: string | number | undefined) => {
-  if (!width) return '100%'
-  if (typeof width === 'number') {
+export function formatWidth(width: string | number | undefined) {
+  if (!width)
+    return '100%'
+  if (typeof width === 'number')
     return `${width}px`
-  }
-  if (width.endsWith('%')) {
+
+  if (width.endsWith('%'))
     return width
-  }
-  if (width.endsWith('px') || width.endsWith('vw')) {
+
+  if (width.endsWith('px') || width.endsWith('vw'))
     return width
-  } else {
-    return `${width}px`
-  }
+  else return `${width}px`
 }
 
-export const noop = () => {}
+export function noop() {}

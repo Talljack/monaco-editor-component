@@ -1,8 +1,9 @@
-import type { MonacoCodeDiffEditor, MonacoDiffEditorProps } from '@/type'
 import * as monaco from 'monaco-editor'
 import type { PropType } from 'vue'
 import { computed, defineComponent, defineExpose, h, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { formatWidth } from '../utils'
+import type { MonacoCodeDiffEditor, MonacoDiffEditorProps } from '@/type'
+
 const props = {
   value: {
     type: String as PropType<MonacoDiffEditorProps['value']>,
@@ -80,8 +81,9 @@ const MonacoDiffEditor = defineComponent({
     const handleMonacoEditorMounted = (editor: MonacoCodeDiffEditor) => {
       props.onEditorDidMount?.(editor, monaco)
       const modifiedModel = editor.getModel()?.modified
-      if (!modifiedModel) return
-      modifiedModel.onDidChangeContent(e => {
+      if (!modifiedModel)
+        return
+      modifiedModel.onDidChangeContent((e) => {
         const newValue = modifiedModel.getValue()
         emit('update:value', newValue, e)
         props.onUpdateValue(newValue, e)
@@ -102,7 +104,8 @@ const MonacoDiffEditor = defineComponent({
             props.language,
             originalModelUri,
           )
-        } else {
+        }
+        else {
           originalModel.setValue(props.originalValue ?? props.defaultValue)
           monaco.editor.setModelLanguage(originalModel, props.language ?? 'javascript')
         }
@@ -113,7 +116,8 @@ const MonacoDiffEditor = defineComponent({
             props.language,
             originalModelUri,
           )
-        } else {
+        }
+        else {
           modifiedModel.setValue(props.value ?? props.defaultValue ?? '')
           monaco.editor.setModelLanguage(modifiedModel, props.language ?? 'javascript')
         }
@@ -140,20 +144,18 @@ const MonacoDiffEditor = defineComponent({
     // watch theme
     watch(
       () => props.theme,
-      newTheme => {
-        if (editor && newTheme) {
+      (newTheme) => {
+        if (editor && newTheme)
           monaco.editor.setTheme(newTheme)
-        }
       },
     )
 
     // watch options
     watch(
       () => props.options,
-      newOptions => {
-        if (editor) {
+      (newOptions) => {
+        if (editor)
           editor.updateOptions(newOptions ?? {})
-        }
       },
       {
         deep: true,
@@ -174,43 +176,43 @@ const MonacoDiffEditor = defineComponent({
 
     watch(
       () => props.language,
-      newLanguage => {
-        if (!newLanguage) return
+      (newLanguage) => {
+        if (!newLanguage)
+          return
         if (editor) {
           const originalModel = editor.getModel()?.original
           const modifiedModel = editor.getModel()?.modified
-          if (originalModel) {
+          if (originalModel)
             monaco.editor.setModelLanguage(originalModel, newLanguage)
-          }
-          if (modifiedModel) {
+
+          if (modifiedModel)
             monaco.editor.setModelLanguage(modifiedModel, newLanguage)
-          }
         }
       },
     )
 
     watch(
       () => props.originalValue,
-      newOriginalValue => {
+      (newOriginalValue) => {
         if (editor) {
           const originalModel = editor.getModel()?.original
-          if (newOriginalValue === originalModel?.getValue()) return
-          if (originalModel) {
+          if (newOriginalValue === originalModel?.getValue())
+            return
+          if (originalModel)
             originalModel.setValue(newOriginalValue ?? '')
-          }
         }
       },
     )
 
     watch(
       () => props.value,
-      newValue => {
+      (newValue) => {
         if (editor) {
           const model = editor.getModel()?.modified
-          if (newValue === model?.getValue()) return
-          if (model) {
+          if (newValue === model?.getValue())
+            return
+          if (model)
             model.setValue(newValue ?? '')
-          }
         }
       },
     )
@@ -235,7 +237,7 @@ const MonacoDiffEditor = defineComponent({
           ...props.style,
         },
         ref: containerRef,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // @typescript-eslint/no-explicit-any
       } as unknown as any)
     }
   },
