@@ -3,6 +3,7 @@ import * as monaco from 'monaco-editor'
 import type { PropType } from 'vue'
 import { computed, defineComponent, defineExpose, h, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { formatWidth } from '../utils'
+
 const props = {
   value: {
     type: String as PropType<MonacoEditorProps['value']>,
@@ -115,9 +116,7 @@ const MonacoEditor = defineComponent({
     watch(
       () => props.theme,
       newTheme => {
-        if (editor && newTheme) {
-          monaco.editor.setTheme(newTheme)
-        }
+        if (editor && newTheme) monaco.editor.setTheme(newTheme)
       },
     )
 
@@ -125,9 +124,7 @@ const MonacoEditor = defineComponent({
     watch(
       () => props.options,
       newOptions => {
-        if (editor) {
-          editor.updateOptions(newOptions ?? {})
-        }
+        if (editor) editor.updateOptions(newOptions ?? {})
       },
       {
         deep: true,
@@ -152,9 +149,7 @@ const MonacoEditor = defineComponent({
         if (!newLanguage) return
         if (editor) {
           const model = editor.getModel()
-          if (model) {
-            monaco.editor.setModelLanguage(model, newLanguage)
-          }
+          if (model) monaco.editor.setModelLanguage(model, newLanguage)
         }
       },
     )
@@ -165,9 +160,7 @@ const MonacoEditor = defineComponent({
         if (editor) {
           if (newValue === editor.getValue()) return
           const model = editor.getModel()
-          if (model) {
-            model.setValue(newValue ?? '')
-          }
+          if (model) model.setValue(newValue ?? '')
         }
       },
     )
@@ -189,7 +182,7 @@ const MonacoEditor = defineComponent({
           ...props.style,
         },
         ref: containerRef,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // @typescript-eslint/no-explicit-any
       } as unknown as any)
     }
   },

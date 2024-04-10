@@ -3,6 +3,7 @@ import * as monaco from 'monaco-editor'
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react'
 import { noop } from '../utils'
 import { useCommonMonacoEditor } from './useCommonEditor'
+
 const MonacoEditor = forwardRef<MonacoEditorRef, MonacoEditorProps>(
   (
     {
@@ -71,15 +72,13 @@ const MonacoEditor = forwardRef<MonacoEditorRef, MonacoEditorProps>(
         onEditorWillUnmount(editorRef.current!, monaco)
         editorRef.current?.dispose()
       }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+      // react-hooks/exhaustive-deps
     }, [containerRef])
     // watch language
     useEffect(() => {
       if (editorRef.current) {
         const model = editorRef.current.getModel()
-        if (model) {
-          monaco.editor.setModelLanguage(model, language)
-        }
+        if (model) monaco.editor.setModelLanguage(model, language)
       }
     }, [language])
 
@@ -88,9 +87,7 @@ const MonacoEditor = forwardRef<MonacoEditorRef, MonacoEditorProps>(
       if (editorRef.current) {
         if (value === editorRef.current.getValue()) return
         const model = editorRef.current.getModel()
-        if (model) {
-          model.setValue(value ?? '')
-        }
+        if (model) model.setValue(value ?? '')
       }
     }, [value])
 

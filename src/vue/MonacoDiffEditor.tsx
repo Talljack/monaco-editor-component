@@ -3,6 +3,7 @@ import * as monaco from 'monaco-editor'
 import type { PropType } from 'vue'
 import { computed, defineComponent, defineExpose, h, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { formatWidth } from '../utils'
+
 const props = {
   value: {
     type: String as PropType<MonacoDiffEditorProps['value']>,
@@ -141,9 +142,7 @@ const MonacoDiffEditor = defineComponent({
     watch(
       () => props.theme,
       newTheme => {
-        if (editor && newTheme) {
-          monaco.editor.setTheme(newTheme)
-        }
+        if (editor && newTheme) monaco.editor.setTheme(newTheme)
       },
     )
 
@@ -151,9 +150,7 @@ const MonacoDiffEditor = defineComponent({
     watch(
       () => props.options,
       newOptions => {
-        if (editor) {
-          editor.updateOptions(newOptions ?? {})
-        }
+        if (editor) editor.updateOptions(newOptions ?? {})
       },
       {
         deep: true,
@@ -179,12 +176,9 @@ const MonacoDiffEditor = defineComponent({
         if (editor) {
           const originalModel = editor.getModel()?.original
           const modifiedModel = editor.getModel()?.modified
-          if (originalModel) {
-            monaco.editor.setModelLanguage(originalModel, newLanguage)
-          }
-          if (modifiedModel) {
-            monaco.editor.setModelLanguage(modifiedModel, newLanguage)
-          }
+          if (originalModel) monaco.editor.setModelLanguage(originalModel, newLanguage)
+
+          if (modifiedModel) monaco.editor.setModelLanguage(modifiedModel, newLanguage)
         }
       },
     )
@@ -195,9 +189,7 @@ const MonacoDiffEditor = defineComponent({
         if (editor) {
           const originalModel = editor.getModel()?.original
           if (newOriginalValue === originalModel?.getValue()) return
-          if (originalModel) {
-            originalModel.setValue(newOriginalValue ?? '')
-          }
+          if (originalModel) originalModel.setValue(newOriginalValue ?? '')
         }
       },
     )
@@ -208,9 +200,7 @@ const MonacoDiffEditor = defineComponent({
         if (editor) {
           const model = editor.getModel()?.modified
           if (newValue === model?.getValue()) return
-          if (model) {
-            model.setValue(newValue ?? '')
-          }
+          if (model) model.setValue(newValue ?? '')
         }
       },
     )
@@ -235,7 +225,7 @@ const MonacoDiffEditor = defineComponent({
           ...props.style,
         },
         ref: containerRef,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // @typescript-eslint/no-explicit-any
       } as unknown as any)
     }
   },

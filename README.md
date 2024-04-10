@@ -27,22 +27,22 @@ You can see the [demo](https://github.com/Talljack/monaco-editor-component/tree/
 ```tsx
 // App.tsx
 import { useState } from 'react'
-import { MonacoEditor, MonacoDiffEditor } from 'monaco-editor-component/react'
+import { MonacoDiffEditor, MonacoEditor } from 'monaco-editor-component/react'
 
-const App = () => {
+// main.tsx
+import { createRoot } from 'react-dom/client'
+import App from './App'
+
+function App() {
   const [code, setCode] = useState('console.log("Hello World")')
 
   return (
     <div>
-      <MonacoEditor language='javascript' value={code} width='300' height='500' onChange={value => setCode(value)} />
-      <MonacoDiffEditor language='javascript' originalValue='const a = 123;' value={code} onChange={value => setCode(value)} />
+      <MonacoEditor language="javascript" value={code} width="300" height="500" onChange={value => setCode(value)} />
+      <MonacoDiffEditor language="javascript" originalValue="const a = 123;" value={code} onChange={value => setCode(value)} />
     </div>
   )
 }
-
-// main.tsx
-import App from './App'
-import { createRoot } from 'react-dom/client'
 const app = document.getElementById('root')
 createRoot(app).render(<App />)
 ```

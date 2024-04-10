@@ -1,7 +1,7 @@
-import * as monaco from 'monaco-editor'
+import type * as monaco from 'monaco-editor'
 import type { EditorLanguage } from 'monaco-editor/esm/metadata'
+import type React from 'react'
 import type { MutableRefObject } from 'react'
-import React from 'react'
 
 export type Monaco = typeof monaco
 
@@ -40,6 +40,10 @@ export type MonacoDiffEditorProps = Omit<MonacoEditorProps<MonacoCodeDiffEditor,
   modifiedUri?: (monaco: Monaco) => monaco.Uri
 }
 
-export type MonacoDiffEditorRef = { editor: MutableRefObject<MonacoCodeDiffEditor | null> }
+export interface MonacoDiffEditorRef {
+  editor: MutableRefObject<MonacoCodeDiffEditor | null>
+}
 
-export type MonacoEditorRef = { editor: MutableRefObject<MonacoCodeEditor | null> }
+export interface MonacoEditorRef {
+  editor: MutableRefObject<MonacoCodeEditor | null>
+}

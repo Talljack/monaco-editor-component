@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { MonacoEditor, MonacoDiffEditor } from 'monaco-editor-component/vue'
-import type { MonacoCodeEditorLanguage, MonacoCodeEditorTheme, MonacoEditorOptions, Monaco } from 'monaco-editor-component/vue'
+import { MonacoDiffEditor, MonacoEditor } from 'monaco-editor-component/vue'
+import type { Monaco, MonacoCodeEditorLanguage, MonacoCodeEditorTheme, MonacoEditorOptions } from 'monaco-editor-component/vue'
 import { ref } from 'vue'
 import { NInput, NSelect, NSpace } from 'naive-ui'
-import "./useWorker"
-import { MonacoCodeEditor } from 'monaco-editor-component';
+import './useWorker'
+import type { MonacoCodeEditor } from 'monaco-editor-component'
 
 const languages: MonacoCodeEditorLanguage[] = [
   'css',
@@ -44,9 +44,9 @@ const themes: MonacoCodeEditorTheme[] = ['vs', 'vs-dark', 'hc-black', 'hc-light'
 
 const input = ref('const a = 123;')
 const language = ref<MonacoCodeEditorLanguage>('javascript')
-const languageOptions = languages.map((item) => ({ label: item, value: item }))
+const languageOptions = languages.map(item => ({ label: item, value: item }))
 const theme = ref<MonacoCodeEditorTheme>('vs-dark')
-const themeOptions = themes.map((item) => ({ label: item, value: item }))
+const themeOptions = themes.map(item => ({ label: item, value: item }))
 const width = ref('300')
 const height = ref('600')
 const options = ref<MonacoEditorOptions>({
@@ -56,16 +56,18 @@ const options = ref<MonacoEditorOptions>({
   lineDecorationsWidth: 0,
   lineNumbersMinChars: 0,
 })
-const handleUpdateOptions = (newOptions: string) => {
+function handleUpdateOptions(newOptions: string) {
   try {
     options.value = JSON.parse(newOptions)
-  } catch (error) {
+  }
+  catch (error) {
     console.log('error', error)
   }
 }
 const monacoEditor = ref<MonacoCodeEditor | null>(null)
 
-const updateMonacoEditor = (editor: MonacoCodeEditor, monaco: Monaco) => {
+// eslint-disable-next-line unused-imports/no-unused-vars
+function updateMonacoEditor(editor: MonacoCodeEditor, monaco: Monaco) {
   monacoEditor.value = editor
   console.log('editor', editor)
 }
@@ -76,42 +78,47 @@ const updateMonacoEditor = (editor: MonacoCodeEditor, monaco: Monaco) => {
     <div class="left">
       <div>
         <span>language</span>
-        <NSelect :options='languageOptions' v-model:value="language" filterable />
+        <NSelect v-model:value="language" :options="languageOptions" filterable />
       </div>
       <div>
         <span>theme</span>
-        <NSelect :options='themeOptions' v-model:value="theme" filterable />
+        <NSelect v-model:value="theme" :options="themeOptions" filterable />
       </div>
       <div>
         <span>width</span>
-        <NInput placeholder="Input width" v-model:value="width" />
+        <NInput v-model:value="width" placeholder="Input width" />
       </div>
       <div>
         <span>height</span>
-        <NInput placeholder="Input height" v-model:value="height" />
+        <NInput v-model:value="height" placeholder="Input height" />
       </div>
       <div>
         <span>options</span>
-        <MonacoEditor :value="JSON.stringify(options, null, 2)" @update:value="handleUpdateOptions" language="json"
-          width="300" height="200" :options="options" />
+        <MonacoEditor
+          :value="JSON.stringify(options, null, 2)" language="json" width="300" height="200"
+          :options="options" @update:value="handleUpdateOptions"
+        />
       </div>
     </div>
-    <MonacoEditor v-model:value="input" :theme="theme" :width="width" :language="language" :height="height"
-      :options="options" :onEditorWillMount="(monaco: Monaco) => {
+    <MonacoEditor
+      v-model:value="input" :theme="theme" :width="width" :language="language" :height="height"
+      :options="options" :on-editor-will-mount="(monaco: Monaco) => {
         return {
           lineNumbers: 'on',
           folding: true,
           glyphMargin: true,
         }
-      }" :onEditorDidMount="updateMonacoEditor" />
-    <MonacoDiffEditor v-model:value="input" originalValue="const a = 12;" :theme="theme" :width="width"
-      :language="language" :height="height" :options="options" :onEditorWillMount="(monaco: Monaco) => {
+      }" :on-editor-did-mount="updateMonacoEditor"
+    />
+    <MonacoDiffEditor
+      v-model:value="input" original-value="const a = 12;" :theme="theme" :width="width"
+      :language="language" :height="height" :options="options" :on-editor-will-mount="(monaco: Monaco) => {
         return {
           glyphMargin: true,
         }
-      }" />
+      }"
+    />
   </NSpace>
 </template>
 
-<style>
-</style>
+<style></style>

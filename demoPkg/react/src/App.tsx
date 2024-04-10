@@ -153,7 +153,8 @@ function App() {
             width={width}
             height={height}
             options={options}
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            // @typescript-eslint/no-unused-vars
+            // eslint-disable-next-line unused-imports/no-unused-vars
             onEditorWillMount={(monaco: Monaco) => {
               return {
                 lineNumbers: 'on',
@@ -167,7 +168,7 @@ function App() {
           <Label>Monaco Diff Editor</Label>
           <MonacoDiffEditor
             value={input}
-            originalValue={'const a = 1;'}
+            originalValue='const a = 1;'
             language={language}
             theme={theme}
             onChange={newValue => {

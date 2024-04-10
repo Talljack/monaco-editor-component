@@ -3,6 +3,7 @@ import * as monaco from 'monaco-editor'
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react'
 import { noop } from '../utils'
 import { useCommonMonacoEditor } from './useCommonEditor'
+
 const MonacoDiffEditor = forwardRef<MonacoDiffEditorRef, MonacoDiffEditorProps>(
   (
     {
@@ -84,7 +85,7 @@ const MonacoDiffEditor = forwardRef<MonacoDiffEditorRef, MonacoDiffEditorProps>(
         onEditorWillUnmount(editorRef.current!, monaco)
         editorRef.current?.dispose()
       }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+      // react-hooks/exhaustive-deps
     }, [editorRef])
     // watch language
     useEffect(() => {
@@ -92,12 +93,9 @@ const MonacoDiffEditor = forwardRef<MonacoDiffEditorRef, MonacoDiffEditorProps>(
         // update every model language
         const originalModel = editorRef.current.getModel()?.original
         const modifiedModel = editorRef.current.getModel()?.modified
-        if (originalModel) {
-          monaco.editor.setModelLanguage(originalModel, language)
-        }
-        if (modifiedModel) {
-          monaco.editor.setModelLanguage(modifiedModel, language)
-        }
+        if (originalModel) monaco.editor.setModelLanguage(originalModel, language)
+
+        if (modifiedModel) monaco.editor.setModelLanguage(modifiedModel, language)
       }
     }, [language])
 
@@ -106,9 +104,7 @@ const MonacoDiffEditor = forwardRef<MonacoDiffEditorRef, MonacoDiffEditorProps>(
       if (editorRef.current) {
         const model = editorRef.current.getModel()?.original
         if (originalValue === model?.getValue()) return
-        if (model) {
-          model.setValue(originalValue ?? '')
-        }
+        if (model) model.setValue(originalValue ?? '')
       }
     }, [originalValue])
     // watch value
@@ -116,9 +112,7 @@ const MonacoDiffEditor = forwardRef<MonacoDiffEditorRef, MonacoDiffEditorProps>(
       if (editorRef.current) {
         const model = editorRef.current.getModel()?.modified
         if (value === model?.getValue()) return
-        if (model) {
-          model.setValue(value ?? '')
-        }
+        if (model) model.setValue(value ?? '')
       }
     }, [value])
     useImperativeHandle(ref, () => ({

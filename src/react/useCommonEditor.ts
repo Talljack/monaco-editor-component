@@ -2,6 +2,7 @@ import type { MonacoCodeDiffEditor, MonacoDiffEditorProps } from '@/type'
 import * as monaco from 'monaco-editor'
 import { useEffect, useMemo } from 'react'
 import { formatWidth } from '../utils'
+
 export function useCommonMonacoEditor<T extends MonacoCodeDiffEditor | monaco.editor.IStandaloneCodeEditor>(
   props: Pick<MonacoDiffEditorProps, 'width' | 'height' | 'theme' | 'options'>,
   editorRef: React.RefObject<T>,
@@ -15,23 +16,17 @@ export function useCommonMonacoEditor<T extends MonacoCodeDiffEditor | monaco.ed
   )
   // watch theme
   useEffect(() => {
-    if (editorRef?.current && props.theme) {
-      monaco.editor.setTheme(props.theme)
-    }
+    if (editorRef?.current && props.theme) monaco.editor.setTheme(props.theme)
   }, [props.theme, editorRef])
 
   // watch options
   useEffect(() => {
-    if (editorRef?.current) {
-      editorRef.current.updateOptions(props.options ?? {})
-    }
+    if (editorRef?.current) editorRef.current.updateOptions(props.options ?? {})
   }, [props.options, editorRef])
 
   // watch width & height -> editor re layout
   useEffect(() => {
-    if (editorRef?.current) {
-      editorRef.current.layout()
-    }
+    if (editorRef?.current) editorRef.current.layout()
   }, [formatedWidth, formatedHeight, editorRef])
 
   return {
