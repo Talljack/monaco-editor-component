@@ -5,6 +5,8 @@ export default antfu({
     'react-hooks/exhaustive-deps': 'off',
     'no-console': 'off',
   },
+  typescript: true,
+  vue: true,
   ignores: [
     'node_modules',
     'node_modules/**',
