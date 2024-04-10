@@ -1,8 +1,8 @@
-import type { MonacoCodeEditor, MonacoEditorProps, MonacoEditorRef } from '@/type'
 import * as monaco from 'monaco-editor'
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react'
 import { noop } from '../utils'
 import { useCommonMonacoEditor } from './useCommonEditor'
+import type { MonacoCodeEditor, MonacoEditorProps, MonacoEditorRef } from '@/type'
 
 const MonacoEditor = forwardRef<MonacoEditorRef, MonacoEditorProps>(
   (
@@ -37,7 +37,7 @@ const MonacoEditor = forwardRef<MonacoEditorRef, MonacoEditorProps>(
     )
     const handleMonacoEditorMounted = (editor: MonacoCodeEditor) => {
       onEditorDidMount(editor, monaco)
-      editor.onDidChangeModelContent(e => {
+      editor.onDidChangeModelContent((e) => {
         const newValue = editor.getValue()
         onChange?.(newValue, e)
       })
@@ -52,7 +52,8 @@ const MonacoEditor = forwardRef<MonacoEditorRef, MonacoEditorProps>(
         let model = uri ? monaco.editor.getModel(uri) : null
         if (!model) {
           model = monaco.editor.createModel(value ?? defaultValue, language, uri)
-        } else {
+        }
+        else {
           // update value and language use same model
           model.setValue(value ?? defaultValue)
           monaco.editor.setModelLanguage(model, language)
@@ -78,16 +79,19 @@ const MonacoEditor = forwardRef<MonacoEditorRef, MonacoEditorProps>(
     useEffect(() => {
       if (editorRef.current) {
         const model = editorRef.current.getModel()
-        if (model) monaco.editor.setModelLanguage(model, language)
+        if (model)
+          monaco.editor.setModelLanguage(model, language)
       }
     }, [language])
 
     // watch value
     useEffect(() => {
       if (editorRef.current) {
-        if (value === editorRef.current.getValue()) return
+        if (value === editorRef.current.getValue())
+          return
         const model = editorRef.current.getModel()
-        if (model) model.setValue(value ?? '')
+        if (model)
+          model.setValue(value ?? '')
       }
     }, [value])
 

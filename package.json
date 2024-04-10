@@ -104,18 +104,10 @@
     "vitest": "^1.4.0"
   },
   "simple-git-hooks": {
-    "pre-commit": "pnpm run lint:fix && pnpm lint-staged",
+    "pre-commit": "pnpm lint-staged",
     "commit-msg": "node scripts/verifyCommit.js"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "prettier --write"
-    ],
-    "package.json": [
-      "prettier --write"
-    ],
-    "*.{scss,less,styl,html,.md}": [
-      "prettier --write"
-    ]
+    "*": "eslint --fix"
   }
 }

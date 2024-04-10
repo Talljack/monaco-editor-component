@@ -1,8 +1,8 @@
-import type { MonacoCodeEditor, MonacoEditorProps } from '@/type'
 import * as monaco from 'monaco-editor'
 import type { PropType } from 'vue'
 import { computed, defineComponent, defineExpose, h, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { formatWidth } from '../utils'
+import type { MonacoCodeEditor, MonacoEditorProps } from '@/type'
 
 const props = {
   value: {
@@ -72,7 +72,7 @@ const MonacoEditor = defineComponent({
     let editor: MonacoCodeEditor | null = null
     const handleMonacoEditorMounted = (editor: MonacoCodeEditor) => {
       props.onEditorDidMount?.(editor, monaco)
-      editor.onDidChangeModelContent(e => {
+      editor.onDidChangeModelContent((e) => {
         const newValue = editor.getValue()
         emit('update:value', newValue, e)
         props.onUpdateValue(newValue, e)
@@ -87,7 +87,8 @@ const MonacoEditor = defineComponent({
         let model = uri ? monaco.editor.getModel(uri) : null
         if (!model) {
           model = monaco.editor.createModel(props.value ?? props.defaultValue ?? '', props.language, uri)
-        } else {
+        }
+        else {
           // update value and language use same model
           model.setValue(props.value ?? props.defaultValue ?? '')
           monaco.editor.setModelLanguage(model, props.language!)
@@ -115,16 +116,18 @@ const MonacoEditor = defineComponent({
     // watch theme
     watch(
       () => props.theme,
-      newTheme => {
-        if (editor && newTheme) monaco.editor.setTheme(newTheme)
+      (newTheme) => {
+        if (editor && newTheme)
+          monaco.editor.setTheme(newTheme)
       },
     )
 
     // watch options
     watch(
       () => props.options,
-      newOptions => {
-        if (editor) editor.updateOptions(newOptions ?? {})
+      (newOptions) => {
+        if (editor)
+          editor.updateOptions(newOptions ?? {})
       },
       {
         deep: true,
@@ -145,22 +148,26 @@ const MonacoEditor = defineComponent({
 
     watch(
       () => props.language,
-      newLanguage => {
-        if (!newLanguage) return
+      (newLanguage) => {
+        if (!newLanguage)
+          return
         if (editor) {
           const model = editor.getModel()
-          if (model) monaco.editor.setModelLanguage(model, newLanguage)
+          if (model)
+            monaco.editor.setModelLanguage(model, newLanguage)
         }
       },
     )
 
     watch(
       () => props.value,
-      newValue => {
+      (newValue) => {
         if (editor) {
-          if (newValue === editor.getValue()) return
+          if (newValue === editor.getValue())
+            return
           const model = editor.getModel()
-          if (model) model.setValue(newValue ?? '')
+          if (model)
+            model.setValue(newValue ?? '')
         }
       },
     )
