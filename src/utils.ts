@@ -1,3 +1,7 @@
+/**
+ *
+ * @param width
+ */
 export function formatWidth(width: string | number | undefined) {
   if (!width)
     return '100%'
@@ -12,4 +16,7 @@ export function formatWidth(width: string | number | undefined) {
   else return `${width}px`
 }
 
+/**
+ *
+ */
 export function noop() {}

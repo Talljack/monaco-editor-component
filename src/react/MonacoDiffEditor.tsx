@@ -26,7 +26,6 @@ const MonacoDiffEditor = forwardRef<MonacoDiffEditorRef, MonacoDiffEditorProps>(
     },
     ref,
   ) => {
-    // const [editor, setEditor] = useState<MonacoCodeDiffEditor | null>(null)
     const containerRef = useRef<HTMLDivElement | null>(null)
     const editorRef = useRef<MonacoCodeDiffEditor | null>(null)
     // common effect
