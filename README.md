@@ -24,7 +24,7 @@ bun install monaco-editor-component
 
 You can see the [demo](https://github.com/Talljack/monaco-editor-component/tree/main/demoPkg/react) details.
 
-```tsx
+```typescript
 // App.tsx
 import { useState } from 'react'
 import { MonacoDiffEditor, MonacoEditor } from 'monaco-editor-component/react'
@@ -33,6 +33,9 @@ import { MonacoDiffEditor, MonacoEditor } from 'monaco-editor-component/react'
 import { createRoot } from 'react-dom/client'
 import App from './App'
 
+/**
+ *
+ */
 function App() {
   const [code, setCode] = useState('console.log("Hello World")')
 
@@ -69,9 +72,10 @@ const input = ref('const a = 12356;')
 </template>
 ```
 
-```tsx
+```typescript
 // main.ts
 import App from './App.vue'
+
 const app = document.getElementById('root')
 createApp(app).render(<App />)
 ```

@@ -48,6 +48,9 @@ const languages: MonacoCodeEditorLanguage[] = [
   'yaml',
 ]
 const themes: MonacoCodeEditorTheme[] = ['vs', 'vs-dark', 'hc-black', 'hc-light']
+/**
+ *
+ */
 function App() {
   const [input, setInput] = useState('')
   const [language, setLanguage] = useState<MonacoCodeEditorLanguage>('javascript')
@@ -68,8 +71,8 @@ function App() {
     console.log('editor', editor.current?.editor.current)
   }, 2000)
   return (
-    <div className="App flex h-screen flex-col">
-      <h1 className="mt-4 flex justify-center font-bold">Monaco Editor Demo</h1>
+    <div className="flex flex-col h-screen App">
+      <h1 className="flex justify-center mt-4 font-bold">Monaco Editor Demo</h1>
       <div className="flex gap-6 p-10">
         <div className="options flex h-[800px] flex-col gap-2">
           <div className="language">
@@ -150,7 +153,7 @@ function App() {
             ref={editor}
             language={language}
             theme={theme}
-            className="ml-4 flex"
+            className="flex ml-4"
             width={width}
             height={height}
             options={options}

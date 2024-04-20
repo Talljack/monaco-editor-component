@@ -3,6 +3,11 @@ import { useEffect, useMemo } from 'react'
 import { formatWidth } from '../utils'
 import type { MonacoCodeDiffEditor, MonacoDiffEditorProps } from '@/type'
 
+/**
+ *
+ * @param props
+ * @param editorRef
+ */
 export function useCommonMonacoEditor<T extends MonacoCodeDiffEditor | monaco.editor.IStandaloneCodeEditor>(
   props: Pick<MonacoDiffEditorProps, 'width' | 'height' | 'theme' | 'options'>,
   editorRef: React.RefObject<T>,

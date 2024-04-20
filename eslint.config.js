@@ -1,23 +1,22 @@
-import antfu from '@antfu/eslint-config'
+// @ts-check
+import createEslintConfig from 'talljack-eslint-config'
 
-export default antfu({
-  rules: {
-    'react-hooks/exhaustive-deps': 'off',
-    'no-console': 'off',
+export default createEslintConfig({
+  typescript: {
+    overrides: {
+      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-unused-vars': 'warn',
+    },
   },
-  typescript: true,
+  javascript: {
+    overrides: {
+      'no-console': 'warn',
+    },
+  },
+  react: {
+    overrides: {
+      'react-hooks/exhaustive-deps': 'off',
+    },
+  },
   vue: true,
-  ignores: [
-    'node_modules',
-    'node_modules/**',
-    'dist',
-    'dist/**',
-    '.DS_Store',
-    '**/.DS_Store/**',
-    '*.json',
-    '*.json/**',
-    'prettier.config.js',
-    '**/prettier.config.js/**',
-    'scripts/verifyCommit.js',
-  ],
 })
