@@ -19,4 +19,10 @@ export default createEslintConfig({
     },
   },
   vue: true,
+  formatters: true,
+  rules: {
+    'unused-imports/no-unused-imports': 'off',
+    'unused-imports/no-unused-vars': 'off',
+  },
+  ignores: ['README.md'],
 })

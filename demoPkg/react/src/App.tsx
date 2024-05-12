@@ -158,7 +158,6 @@ function App() {
             height={height}
             options={options}
             // @typescript-eslint/no-unused-vars
-            // eslint-disable-next-line unused-imports/no-unused-vars
             onEditorWillMount={(monaco: Monaco) => {
               return {
                 lineNumbers: 'on',
