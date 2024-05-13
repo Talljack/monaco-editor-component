@@ -24,15 +24,13 @@ bun install monaco-editor-component
 
 You can see the [demo](https://github.com/Talljack/monaco-editor-component/tree/main/demoPkg/react) details.
 
-```typescript
+```tsx
 // App.tsx
 import { useState } from 'react'
 import { MonacoDiffEditor, MonacoEditor } from 'monaco-editor-component/react'
+import { createRoot } from 'react-dom/client'
 
 // main.tsx
-import { createRoot } from 'react-dom/client'
-import App from './App'
-
 /**
  *
  */
@@ -54,7 +52,7 @@ createRoot(app).render(<App />)
 
 You can see the [demo](https://github.com/Talljack/monaco-editor-component/tree/main/demoPkg/vue) details.
 
-```typescript
+```vue
 // App.vue
 <script setup lang="ts">
 import { ref } from 'vue'
@@ -72,7 +70,7 @@ const input = ref('const a = 12356;')
 </template>
 ```
 
-```typescript
+```tsx
 // main.ts
 import App from './App.vue'
 
@@ -158,29 +156,29 @@ import htmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker'
 import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker'
 import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-self.MonacoEnvironment = {
-  getWorker(_: unknown, label: string) {
-    if (label === 'json') {
-      return new jsonWorker()
-    }
-    if (label === 'css' || label === 'scss' || label === 'less') {
-      return new cssWorker()
-    }
-    if (label === 'html' || label === 'handlebars' || label === 'razor') {
-      return new htmlWorker()
-    }
-    if (label === 'typescript' || label === 'javascript') {
-      return new tsWorker()
-    }
-    return new editorWorker()
-  },
-}
-
 // App.tsx
 import { MonacoEditor } from 'monaco-editor-component/react'
 import './worker'
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
+self.MonacoEnvironment = {
+  getWorker(_: unknown, label: string) {
+    if (label === 'json')
+      return new jsonWorker()
+
+    if (label === 'css' || label === 'scss' || label === 'less')
+      return new cssWorker()
+
+    if (label === 'html' || label === 'handlebars' || label === 'razor')
+      return new htmlWorker()
+
+    if (label === 'typescript' || label === 'javascript')
+      return new tsWorker()
+
+    return new editorWorker()
+  },
+}
 
 // usage of MonacoEditor...
 ```
