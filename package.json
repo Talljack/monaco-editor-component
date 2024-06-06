@@ -95,7 +95,7 @@
     "prettier-plugin-tailwindcss": "^0.6.1",
     "rimraf": "^5.0.7",
     "simple-git-hooks": "^2.11.1",
-    "tailwindcss": "^3.4.3",
+    "tailwindcss": "^3.4.4",
     "tailwindcss-animate": "^1.0.7",
     "talljack-eslint-config": "^0.2.6",
     "tsup": "^8.1.0",
