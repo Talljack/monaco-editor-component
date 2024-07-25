@@ -9,14 +9,14 @@
   },
   "dependencies": {
     "monaco-editor-component": "^0.1.0",
-    "vue": "^3.4.31"
+    "vue": "^3.4.33"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.5",
-    "@vue/compiler-sfc": "^3.4.31",
-    "naive-ui": "^2.38.2",
+    "@vue/compiler-sfc": "^3.4.33",
+    "naive-ui": "^2.39.0",
     "typescript": "^5.5.3",
-    "vite": "^5.3.3",
-    "vue-tsc": "^2.0.24"
+    "vite": "^5.3.4",
+    "vue-tsc": "^2.0.26"
   }
 }
