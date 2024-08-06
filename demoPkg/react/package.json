@@ -14,12 +14,12 @@
     "@radix-ui/react-slot": "^1.1.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
-    "lucide-react": "^0.400.0",
+    "lucide-react": "^0.417.0",
     "monaco-editor": "^0.50.0",
     "monaco-editor-component": "^0.1.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "tailwind-merge": "^2.3.0",
+    "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
@@ -27,11 +27,11 @@
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "^10.4.19",
-    "bun-types": "^1.1.17",
-    "postcss": "^8.4.39",
-    "tailwindcss": "^3.4.6",
-    "typescript": "^5.5.3",
-    "vite": "^5.3.4",
+    "bun-types": "^1.1.21",
+    "postcss": "^8.4.40",
+    "tailwindcss": "^3.4.7",
+    "typescript": "5.5.4",
+    "vite": "^5.3.5",
     "vite-tsconfig-paths": "^4.3.2"
   }
 }
