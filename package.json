@@ -86,7 +86,7 @@
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^8.2.0",
     "bumpp": "^9.5.1",
-    "eslint": "^9.9.0",
+    "eslint": "^9.12.0",
     "eslint-plugin-astro": "^1.2.3",
     "lint-staged": "^15.2.9",
     "picocolors": "^1.0.1",
