@@ -16,7 +16,7 @@
     "@vue/compiler-sfc": "^3.4.34",
     "naive-ui": "^2.39.0",
     "typescript": "^5.5.4",
-    "vite": "^5.3.5",
+    "vite": "^5.3.6",
     "vue-tsc": "^2.0.29"
   }
 }
