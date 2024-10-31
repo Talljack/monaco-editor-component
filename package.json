@@ -65,6 +65,8 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
+    "dev:react": "pnpm -C demoPkg/react dev",
+    "dev:vue": "pnpm -C demoPkg/vue dev",
     "lint": "eslint --cache .",
     "lint:fix": "eslint --fix .",
     "format": "prettier --cache --write .",
